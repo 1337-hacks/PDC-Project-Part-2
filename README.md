@@ -6,5 +6,9 @@ Me and Sangy's work
         - Improved GUI
         - Fixed bug where an account with no username could be created.
         
-13/6/20
+13/6/20 - Improved GUI
+        - Database connection now closes upon the window closing.
+        - Added a log out button
+        - User is now able to choose a train line
+        - Fixed bug where text fields will still hold past entries
         
