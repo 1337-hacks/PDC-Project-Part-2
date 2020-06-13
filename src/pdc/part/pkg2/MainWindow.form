@@ -3,14 +3,15 @@
 <Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
-    <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-      <Dimension value="[650, 500]"/>
-    </Property>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
     <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
   </SyntheticProperties>
+  <Events>
+    <EventHandler event="windowClosed" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="formWindowClosed"/>
+    <EventHandler event="windowClosing" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="formWindowClosing"/>
+  </Events>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
@@ -27,6 +28,13 @@
   <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
   <SubComponents>
     <Container class="javax.swing.JPanel" name="headerPanel">
+      <Properties>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+            <LineBorder/>
+          </Border>
+        </Property>
+      </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
           <BorderConstraints direction="First"/>
@@ -38,9 +46,9 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <Component id="mainHeaderTitle" min="-2" pref="337" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="cancelBookingButton" pref="343" max="32767" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace pref="65" max="32767" attributes="0"/>
+                  <Component id="headerLogOutButton" min="-2" pref="242" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -50,9 +58,9 @@
                   <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="mainHeaderTitle" alignment="3" min="-2" pref="47" max="-2" attributes="0"/>
-                      <Component id="cancelBookingButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="headerLogOutButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="29" max="32767" attributes="0"/>
+                  <EmptySpace pref="27" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -75,14 +83,27 @@
             </Property>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="cancelBookingButton">
+        <Component class="javax.swing.JButton" name="headerLogOutButton">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Cancel Booking"/>
+            <Property name="text" type="java.lang.String" value="Log Out"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="headerLogOutButtonActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
     <Container class="javax.swing.JPanel" name="cardLayoutPanel">
+      <Properties>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+            <LineBorder/>
+          </Border>
+        </Property>
+        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[700, 400]"/>
+        </Property>
+      </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
           <BorderConstraints direction="Center"/>
@@ -98,121 +119,152 @@
             </Constraint>
           </Constraints>
 
-          <Layout>
-            <DimensionLayout dim="0">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="loginLabel" min="-2" pref="194" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="235" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="169" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <Component id="passwordLabel" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="userPasswordFIeld" min="-2" pref="195" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="userNameLabel" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="userInputField" max="32767" attributes="0"/>
+          <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
+          <SubComponents>
+            <Container class="javax.swing.JPanel" name="loginInnerPanel">
+              <Constraints>
+                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
+                  <BorderConstraints direction="Center"/>
+                </Constraint>
+              </Constraints>
+
+              <Layout>
+                <DimensionLayout dim="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="1" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="createButton" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="createLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="loginButton" alignment="0" min="-2" pref="98" max="-2" attributes="0"/>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="userNameLabel" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="userInputField" min="-2" pref="194" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="passwordLabel" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="userPasswordField" min="-2" pref="195" max="-2" attributes="0"/>
+                                      </Group>
                                   </Group>
                               </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
+                                  <Component id="loginLabel" min="-2" pref="194" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="294" max="-2" attributes="0"/>
-                              <Component id="createButton" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace pref="12" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jLabel3" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel1" alignment="1" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="280" max="-2" attributes="0"/>
-                              <Component id="loginButton" min="-2" pref="98" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="266" max="-2" attributes="0"/>
-                              <Component id="createLabel" min="-2" max="-2" attributes="0"/>
-                          </Group>
+                          <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="252" max="32767" attributes="0"/>
                   </Group>
-              </Group>
-            </DimensionLayout>
-            <DimensionLayout dim="1">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="loginLabel" min="-2" pref="31" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="userNameLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="userInputField" alignment="3" min="-2" max="-2" attributes="0"/>
+                </DimensionLayout>
+                <DimensionLayout dim="1">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+                          <Component id="loginLabel" min="-2" pref="31" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace pref="94" max="32767" attributes="0"/>
+                                  <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="userNameLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="userInputField" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="passwordLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="userPasswordField" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="loginButton" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
+                                  <Component id="createLabel" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="createButton" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
                       </Group>
-                      <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="passwordLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="userPasswordFIeld" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
-                      <Component id="loginButton" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-                      <Component id="createLabel" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="createButton" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="86" max="-2" attributes="0"/>
                   </Group>
-              </Group>
-            </DimensionLayout>
-          </Layout>
-          <SubComponents>
-            <Component class="javax.swing.JLabel" name="userNameLabel">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Username"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JLabel" name="passwordLabel">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Password"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JTextField" name="userInputField">
-            </Component>
-            <Component class="javax.swing.JPasswordField" name="userPasswordFIeld">
-            </Component>
-            <Component class="javax.swing.JLabel" name="loginLabel">
-              <Properties>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Dialog" size="24" style="1"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Login Page"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JButton" name="loginButton">
-              <Properties>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Dialog" size="14" style="1"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Login"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="loginButtonActionPerformed"/>
-              </Events>
-            </Component>
-            <Component class="javax.swing.JLabel" name="createLabel">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Create an account here:"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JButton" name="createButton">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Create"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="createButtonActionPerformed"/>
-              </Events>
-            </Component>
+                </DimensionLayout>
+              </Layout>
+              <SubComponents>
+                <Component class="javax.swing.JLabel" name="loginLabel">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Dialog" size="24" style="1"/>
+                    </Property>
+                    <Property name="horizontalAlignment" type="int" value="0"/>
+                    <Property name="text" type="java.lang.String" value="Login Page"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JButton" name="loginButton">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Dialog" size="14" style="1"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Login"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="loginButtonActionPerformed"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JLabel" name="createLabel">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Don&apos;t have an account? Create an account here:"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JButton" name="createButton">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Create"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="createButtonActionPerformed"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JLabel" name="userNameLabel">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Username"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="passwordLabel">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Password"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JTextField" name="userInputField">
+                </Component>
+                <Component class="javax.swing.JPasswordField" name="userPasswordField">
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel3">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Dialog" size="10" style="1"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="NZT Train Booking Company 2020. All rights reserved"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel1">
+                  <Properties>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/photos/loginPanelTrainPhoto.jpg"/>
+                    </Property>
+                  </Properties>
+                </Component>
+              </SubComponents>
+            </Container>
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="registerPanel">
@@ -226,43 +278,49 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="201" max="-2" attributes="0"/>
-                              <Component id="registerLabel" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="133" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="lNameLabel" min="-2" max="-2" attributes="0"/>
-                                  <Component id="fNameLabel" min="-2" max="-2" attributes="0"/>
-                                  <Component id="userLabel" alignment="1" min="-2" max="-2" attributes="0"/>
-                                  <Component id="rPasswordLabel" alignment="1" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <Component id="register_backButton" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace pref="157" max="32767" attributes="0"/>
-                                      <Component id="register_createButton" min="-2" max="-2" attributes="0"/>
+                                  <Component id="registerLabel" min="-2" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                                              <Component id="lNameLabel" min="-2" max="-2" attributes="0"/>
+                                              <Component id="fNameLabel" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Component id="userLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="rPasswordLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="regisPasswordField" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="regisUserField" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="lastNameField" max="32767" attributes="0"/>
+                                          <Component id="firstNameField" alignment="0" min="-2" pref="284" max="-2" attributes="0"/>
+                                      </Group>
                                   </Group>
-                                  <Component id="regisPasswordField" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="regisUserField" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="lastNameField" max="32767" attributes="0"/>
-                                  <Component id="firstNameField" alignment="0" max="32767" attributes="0"/>
                               </Group>
+                              <EmptySpace min="0" pref="292" max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <Component id="register_createButton" min="-2" pref="159" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
+                              <Component id="register_backButton" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace pref="199" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                       <Component id="registerLabel" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="fNameLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="firstNameField" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -286,8 +344,9 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="register_createButton" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="register_backButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="49" max="32767" attributes="0"/>
+                      <EmptySpace pref="73" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -322,6 +381,9 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="firstNameField">
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="firstNameFieldActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="lastNameField">
             </Component>
@@ -334,7 +396,7 @@
             </Component>
             <Component class="javax.swing.JButton" name="register_createButton">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Create"/>
+                <Property name="text" type="java.lang.String" value="Create Account"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="register_createButtonActionPerformed"/>
@@ -342,11 +404,16 @@
             </Component>
             <Component class="javax.swing.JButton" name="register_backButton">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Back"/>
+                <Property name="text" type="java.lang.String" value="Back to login"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="register_backButtonActionPerformed"/>
               </Events>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabel4">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Already have an account?"/>
+              </Properties>
             </Component>
           </SubComponents>
         </Container>
@@ -365,30 +432,13 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="bookingHeader" min="-2" pref="605" max="-2" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="polarExpressPanel" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                      <EmptySpace pref="87" max="32767" attributes="0"/>
+                  <Component id="bookingHeader" max="32767" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="polarExpressPanel" min="-2" pref="336" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="alleyExpressPanel" pref="311" max="32767" attributes="0"/>
                   </Group>
-                  <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="buttonPanel" max="32767" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                      </Group>
-                  </Group>
-                  <Group type="103" rootIndex="2" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace pref="288" max="32767" attributes="0"/>
-                          <Component id="alleyExpressPanel" min="-2" pref="398" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                      </Group>
-                  </Group>
+                  <Component id="buttonPanel" alignment="0" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
@@ -396,22 +446,12 @@
                   <Group type="102" attributes="0">
                       <Component id="bookingHeader" min="-2" pref="34" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="polarExpressPanel" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="88" max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace pref="311" max="32767" attributes="0"/>
-                          <Component id="buttonPanel" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="alleyExpressPanel" pref="266" max="32767" attributes="0"/>
+                          <Component id="polarExpressPanel" pref="266" max="32767" attributes="0"/>
                       </Group>
-                  </Group>
-                  <Group type="103" rootIndex="2" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
-                          <Component id="alleyExpressPanel" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="94" max="32767" attributes="0"/>
-                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="buttonPanel" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -419,6 +459,9 @@
           <SubComponents>
             <Component class="javax.swing.JLabel" name="bookingHeader">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Dialog" size="18" style="1"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Please choose a train service to book from:"/>
               </Properties>
             </Component>
@@ -428,23 +471,20 @@
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
-                          <Component id="bookPolarExpress" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="229" max="32767" attributes="0"/>
-                          <Component id="bookAlleyExpress" min="-2" pref="181" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="95" max="-2" attributes="0"/>
+                          <Component id="bookPolarExpress" max="32767" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="bookAlleyExpress" min="-2" pref="310" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <Component id="bookPolarExpress" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="bookAlleyExpress" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="bookAlleyExpress" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="bookPolarExpress" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
                           <EmptySpace pref="16" max="32767" attributes="0"/>
                       </Group>
                   </Group>
@@ -454,6 +494,9 @@
                 <Component class="javax.swing.JButton" name="bookAlleyExpress">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Book for Alley Express"/>
+                    <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                      <Dimension value="[141, 23]"/>
+                    </Property>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bookAlleyExpressActionPerformed"/>
@@ -470,30 +513,34 @@
               </SubComponents>
             </Container>
             <Container class="javax.swing.JPanel" name="alleyExpressPanel">
+              <Properties>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                    <TitledBorder justification="2" title="Alley Express Train Service"/>
+                  </Border>
+                </Property>
+                <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[300, 165]"/>
+                </Property>
+              </Properties>
 
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="alleyExpressDescription" pref="0" max="32767" attributes="0"/>
                       <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace max="32767" attributes="0"/>
+                          <EmptySpace pref="32" max="32767" attributes="0"/>
                           <Component id="alleyExpressPicture" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="894" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="alleyExpressDescription" min="-2" pref="283" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
-                          <Component id="alleyExpressPicture" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
-                          <Component id="alleyExpressDescription" min="-2" pref="122" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+                          <Component id="alleyExpressPicture" min="-2" pref="167" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="alleyExpressDescription" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -502,39 +549,51 @@
                 <Component class="javax.swing.JLabel" name="alleyExpressDescription">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="&lt;html&gt;The Alley Express provides only the most comfortable and relaxing experiences for our passengers while passing through the natural wonders of the North Island. With train lines all around the North Island, we are able to give you easy  access to New Zealand&apos;s popular landmarks.&lt;/html&gt; "/>
+                    <Property name="verticalAlignment" type="int" value="1"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="alleyExpressPicture">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Insert pic here for alley express"/>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/photos/alleyExpressLogoPhoto.jpg"/>
+                    </Property>
                   </Properties>
                 </Component>
               </SubComponents>
             </Container>
             <Container class="javax.swing.JPanel" name="polarExpressPanel">
+              <Properties>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                    <TitledBorder justification="2" title="Polar Express Train Service"/>
+                  </Border>
+                </Property>
+                <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[300, 264]"/>
+                </Property>
+              </Properties>
 
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="polarExpressPicture" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="polarExpressDescription" pref="0" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
-                          <Component id="polarExpressDescription" min="-2" pref="258" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="12" max="32767" attributes="0"/>
+                          <EmptySpace min="-2" pref="70" max="-2" attributes="0"/>
+                          <Component id="polarExpressPicture" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="73" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                           <Component id="polarExpressPicture" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="polarExpressDescription" pref="129" max="32767" attributes="0"/>
-                          <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="polarExpressDescription" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -542,12 +601,16 @@
               <SubComponents>
                 <Component class="javax.swing.JLabel" name="polarExpressPicture">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Insert pic here for polar express"/>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/photos/polarExpressLogoPhoto.jpg"/>
+                    </Property>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="polarExpressDescription">
                   <Properties>
+                    <Property name="horizontalAlignment" type="int" value="0"/>
                     <Property name="text" type="java.lang.String" value="&lt;html&gt;Here at the Polar Express, we give our guests an  unforgettable experience of travelling around New Zealand&apos;s most  breathtaking views in the South Island. With a variety of train lines to choose from, we have a journey for everyone.&lt;/html&gt; "/>
+                    <Property name="verticalAlignment" type="int" value="1"/>
                   </Properties>
                 </Component>
               </SubComponents>
@@ -570,14 +633,14 @@
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="descriptionLabel" min="-2" max="-2" attributes="0"/>
-                                  <Component id="descriptionLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="jScrollPane1" alignment="0" min="-2" pref="256" max="-2" attributes="0"/>
+                                  <Component id="descriptionLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
                               <Component id="trainLineBackButton" min="-2" pref="137" max="-2" attributes="0"/>
-                              <EmptySpace pref="352" max="32767" attributes="0"/>
+                              <EmptySpace pref="350" max="32767" attributes="0"/>
                               <Component id="trainLineButton" min="-2" pref="163" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
                           </Group>
@@ -594,12 +657,17 @@
                       <Component id="descriptionLabel2" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jScrollPane1" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="trainLineButton" min="-2" max="-2" attributes="0"/>
-                          <Component id="trainLineBackButton" min="-2" pref="32" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+                              <Component id="trainLineButton" min="-2" pref="32" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="trainLineBackButton" min="-2" pref="32" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
-                      <EmptySpace pref="131" max="32767" attributes="0"/>
+                      <EmptySpace pref="123" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -607,6 +675,9 @@
           <SubComponents>
             <Component class="javax.swing.JLabel" name="descriptionLabel">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Dialog" size="24" style="1"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Select which train line you would like to book:"/>
               </Properties>
             </Component>
@@ -664,7 +735,7 @@
                           <Group type="102" attributes="0">
                               <EmptySpace min="-2" pref="136" max="-2" attributes="0"/>
                               <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="363" max="32767" attributes="0"/>
+                              <EmptySpace min="0" pref="361" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
@@ -682,7 +753,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="110" max="-2" attributes="0"/>
                       <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="207" max="32767" attributes="0"/>
+                      <EmptySpace pref="205" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="confirmSeatBackButton" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="confirmSeatButton" alignment="3" min="-2" max="-2" attributes="0"/>

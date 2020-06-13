@@ -34,6 +34,7 @@ public class TrainBookingProgram
         database.view("bookings");
         window.setVisible(true);
         
+        
         /*if(true)
         {
             //database.closeConnection();
