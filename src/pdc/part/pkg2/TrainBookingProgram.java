@@ -28,12 +28,17 @@ public class TrainBookingProgram
         DBManager database = new DBManager();
         MainWindow window = new MainWindow();
     
-        database.createTable();
+       database.createTable();
         
         database.view("customer");
         database.view("bookings");
         window.setVisible(true);
         
+        TestWindow test = new TestWindow("Seat Booking", 3, 30);
+        
+        window.getTrainData().getAlleyExpressService().getTrainLine()[0].getSeatGrid().displayGrid();
+        
+        window.getTrainData().getPolarExpressService().getTrainLine()[0].getSeatGrid().displayGrid();
         
         /*if(true)
         {

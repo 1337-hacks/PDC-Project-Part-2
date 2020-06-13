@@ -11,13 +11,14 @@
 package pdc.part.pkg2;
 
 import java.util.Arrays;
+import javax.swing.*;
 
 /**
  *
  * @author Elijah 18023249 and John 18017056
  */
 
-public class Seat 
+public class Seat extends JToggleButton
 {
     //Variables
     private double seatPrice;
@@ -28,6 +29,8 @@ public class Seat
     //Constructor
     public Seat()
     {
+        super();
+        
         this.seatPrice = 0.0;
         this.seatFeatures = null;
         this.seatTaken = false;
@@ -35,6 +38,8 @@ public class Seat
     
     public Seat(double seatPrice, String[] seatFeatures, String seatName)
     {
+        super(seatName);
+        
         this.seatPrice = seatPrice;
         this.seatFeatures = seatFeatures;
         this.seatName = seatName;

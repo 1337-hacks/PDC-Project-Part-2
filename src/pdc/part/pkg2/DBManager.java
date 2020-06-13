@@ -36,7 +36,7 @@ public class DBManager
     {
         try
         {
-            setConn(DriverManager.getConnection(getUrl(), getUsername(), getPassword()));
+            conn = DriverManager.getConnection(getUrl(), getUsername(), getPassword());
             System.out.println("Connected!");
         }
         catch (SQLException e)

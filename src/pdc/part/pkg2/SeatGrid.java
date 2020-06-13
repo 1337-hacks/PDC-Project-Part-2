@@ -8,12 +8,15 @@
 
 package pdc.part.pkg2;
 
+import java.awt.*;
+import javax.swing.*;
+
 /**
  *
  * @author Elijah 18023249 and John 18017056
  */
 
-public class SeatGrid 
+public class SeatGrid extends javax.swing.JPanel
 {
     //Variables
     
@@ -23,11 +26,15 @@ public class SeatGrid
     private int firstClassRows;
     private EconomyClass [][] economyClass;
     private FirstClass [][] firstClass;
+    private JPanel firstClassPanel;
+    private JPanel economyClassPanel;
     
     //Constructors
     
     public SeatGrid()
     {
+        super();
+        
         this.seatNumber = 0;
         this.economyClassRows = 0;
         this.economyClass = new EconomyClass[0][0];
@@ -37,12 +44,22 @@ public class SeatGrid
     
     public SeatGrid(int aisleNumber, int seatNumber, int economyClassRows, int firstClassRows)
     {
+        super();
+        
+        setLayout(new BorderLayout());
+        JPanel firstClassPanel = new JPanel(new GridLayout(firstClassRows, seatNumber));
+        JPanel economyClassPanel = new JPanel(new GridLayout(economyClassRows, seatNumber));
+        
+        add(firstClassPanel, BorderLayout.NORTH);
+        add(economyClassPanel, BorderLayout.CENTER);
+        
         this.columnNumber = aisleNumber;
         this.seatNumber = seatNumber;
         this.economyClassRows = economyClassRows;
         this.firstClassRows = firstClassRows;
         this.economyClass = new EconomyClass[seatNumber][economyClassRows];
         this.firstClass = new FirstClass[seatNumber][firstClassRows];
+        
         
         //Economy Class instantiation
         for(int y = 0; y < economyClassRows; y++)
@@ -61,6 +78,27 @@ public class SeatGrid
                 this.firstClass[x][y] = new FirstClass();
             }
         }
+        
+        //Economy Class Swing Buttons Instantiation
+        for(int y = 0; y < economyClassRows; y++)
+        {
+            for(int x = 0; x < seatNumber; x++)
+            {
+                economyClassPanel.add(this.economyClass[x][y]);
+            }
+        }
+        
+        //First Class Swing Buttons Instantiation
+        for(int y = 0; y < firstClassRows; y++)
+        {
+            for(int x = 0; x < seatNumber; x++)
+            {
+                firstClassPanel.add(this.firstClass[x][y]);
+            }
+        }
+        
+        this.setBackground(Color.red);
+        this.setSize(100, 100);
     }
     
     //Methods
