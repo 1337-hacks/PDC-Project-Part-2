@@ -12,3 +12,7 @@ Me and Sangy's work
         - User is now able to choose a train line
         - Fixed bug where text fields will still hold past entries
         
+        
+13/6/20 - Modified Seat and SeatGrid allows for JToggleButton Implementation.
+        - TestWindow tests the above SeatGrid class. Note: SeatGrid extends JPanel.
+        - SeatGrid still needs to be implemented to the main code!
