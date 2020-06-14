@@ -16,3 +16,9 @@ Me and Sangy's work
 13/6/20 - Modified Seat and SeatGrid allows for JToggleButton Implementation.
         - TestWindow tests the above SeatGrid class. Note: SeatGrid extends JPanel.
         - SeatGrid still needs to be implemented to the main code!
+
+14/6/20 - Added window where user can select and their chosen seats (still needs polishing)
+        - Added an arraylist under TrainDataModel that holds user's chosen seats.
+        - TODO: Add a jpanel under MainFrame which shows the details of user's selected seats as well as the total price.
+        - TODO: create the .txt file to hold user's selected seats, and read and write them.
+        - TODO: Polished GUI.
