@@ -4,6 +4,11 @@
  */
 package pdc.part.pkg2;
 
+// 1 = Alley, 2 = Polar
+// 0,1,2,3 = TrainLine
+// 1 = First, 2 = Economy
+// x coord
+// y coord
 
 /**
  *
@@ -11,38 +16,37 @@ package pdc.part.pkg2;
  */
 public class TrainBookingProgram 
 {
-    public static void trainService(MainWindow window)
+    public static void trainService(MainFrame window)
     {
+        window.getTrainData().getBookedSeatList().add(window.getTrainData().getUserBookedServiceLine());
+        
         if(window.getTrainData().getChosenService() == window.getTrainData().getPolarExpressService())
         {
-            System.out.println("Booked Polar Express");
+            window.getTrainData().getUserBookedServiceLine()[0] = 2;
+            
         }
         else if(window.getTrainData().getChosenService() == window.getTrainData().getAlleyExpressService())
         {
-            System.out.println("Booked Alley Express");
+            window.getTrainData().getUserBookedServiceLine()[0] = 1;
         }
+    }
+    
+    public static void bookedSeats(MainFrame window)
+    {
+        
     }
     
     public static void main(String[] args)
     {
         DBManager database = new DBManager();
-        MainWindow window = new MainWindow();
+        MainFrame window = new MainFrame();
     
-       database.createTable();
+        database.createTable();
         
         database.view("customer");
         database.view("bookings");
         window.setVisible(true);
         
-        TestWindow test = new TestWindow("Seat Booking", 3, 30);
-        
-        window.getTrainData().getAlleyExpressService().getTrainLine()[0].getSeatGrid().displayGrid();
-        
-        window.getTrainData().getPolarExpressService().getTrainLine()[0].getSeatGrid().displayGrid();
-        
-        /*if(true)
-        {
-            //database.closeConnection();
-        }*/
+        database.closeConnection();
     }    
 }

@@ -26,9 +26,9 @@ public class EconomyClass extends Seat
 
     
     //Constructor
-    public EconomyClass()
+    public EconomyClass(int seatX, int seatY)
     {
-        super(seatPrice, seatFeatures, seatName);
+        super(seatPrice, seatFeatures, "EC", seatX, seatY);
     }
 
     

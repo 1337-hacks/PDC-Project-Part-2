@@ -30,9 +30,9 @@ public class FirstClass extends Seat
     
     
     //Constructor
-    public FirstClass()
+    public FirstClass(int seatX, int seatY)
     {
-        super(seatPrice, seatFeatures, seatName);
+        super(seatPrice, seatFeatures, "FC", seatX, seatY);
     }
 
 }

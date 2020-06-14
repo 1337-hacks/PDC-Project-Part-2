@@ -12,6 +12,7 @@ package pdc.part.pkg2;
 
 import java.util.Arrays;
 import javax.swing.*;
+import java.awt.event.*;
 
 /**
  *
@@ -25,6 +26,8 @@ public class Seat extends JToggleButton
     private String[] seatFeatures;
     private String seatName;
     private boolean seatTaken;
+    private int seatX;
+    private int seatY;
     
     //Constructor
     public Seat()
@@ -36,7 +39,7 @@ public class Seat extends JToggleButton
         this.seatTaken = false;
     }
     
-    public Seat(double seatPrice, String[] seatFeatures, String seatName)
+    public Seat(double seatPrice, String[] seatFeatures, String seatName, int seatX, int seatY)
     {
         super(seatName);
         
@@ -44,6 +47,25 @@ public class Seat extends JToggleButton
         this.seatFeatures = seatFeatures;
         this.seatName = seatName;
         this.seatTaken = false;
+        
+        //ItemListener
+        this.addItemListener(new ItemListener() 
+        {
+            @Override
+            public void itemStateChanged(ItemEvent ev) 
+            {
+                if(ev.getStateChange()==ItemEvent.SELECTED)
+                {
+                    System.out.println("button is selected: " + seatX + ", " + seatY);
+                    seatTaken = true;
+                } 
+                else if(ev.getStateChange()==ItemEvent.DESELECTED)
+                {
+                    System.out.println("button is not selected");
+                    seatTaken = false;
+                }
+            }
+        });
     }
     
     //Methods
@@ -92,6 +114,22 @@ public class Seat extends JToggleButton
     public void setSeatTaken(boolean seatTaken) 
     {
         this.seatTaken = seatTaken;
+    }
+    
+    public int getSeatX() {
+        return seatX;
+    }
+
+    public void setSeatX(int seatX) {
+        this.seatX = seatX;
+    }
+
+    public int getSeatY() {
+        return seatY;
+    }
+
+    public void setSeatY(int seatY) {
+        this.seatY = seatY;
     }
     
     //ToString
