@@ -167,6 +167,7 @@ public class DBManager
       
     }
     
+    //INSERT BOOKING
 
     //Getters and Setters
     

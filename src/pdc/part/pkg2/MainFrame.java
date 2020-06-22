@@ -163,10 +163,13 @@ public class MainFrame extends javax.swing.JFrame
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        bookedSeatList = new javax.swing.JList<>();
         totalPriceLabel = new javax.swing.JLabel();
         selectedTrainLineLabel = new javax.swing.JLabel();
         selectedTrainServiceLabel = new javax.swing.JLabel();
         backToBookingButton = new javax.swing.JButton();
+        jLabel11 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -199,7 +202,7 @@ public class MainFrame extends javax.swing.JFrame
             headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(headerPanelLayout.createSequentialGroup()
                 .addComponent(mainHeaderTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 90, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 280, Short.MAX_VALUE)
                 .addComponent(headerLogOutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(46, 46, 46))
         );
@@ -274,7 +277,7 @@ public class MainFrame extends javax.swing.JFrame
                     .addGroup(loginInnerPanelLayout.createSequentialGroup()
                         .addGap(36, 36, 36)
                         .addComponent(loginLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 229, Short.MAX_VALUE)
                 .addGroup(loginInnerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING))
@@ -374,7 +377,7 @@ public class MainFrame extends javax.swing.JFrame
                                     .addComponent(regisUserField)
                                     .addComponent(lastNameField)
                                     .addComponent(firstNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 343, Short.MAX_VALUE))
+                        .addGap(0, 526, Short.MAX_VALUE))
                     .addGroup(registerPanelLayout.createSequentialGroup()
                         .addComponent(register_createButton, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -409,7 +412,7 @@ public class MainFrame extends javax.swing.JFrame
                     .addComponent(register_createButton)
                     .addComponent(register_backButton)
                     .addComponent(jLabel4))
-                .addContainerGap(73, Short.MAX_VALUE))
+                .addContainerGap(98, Short.MAX_VALUE))
         );
 
         cardLayoutPanel.add(registerPanel, "card6");
@@ -467,7 +470,7 @@ public class MainFrame extends javax.swing.JFrame
             alleyExpressPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(alleyExpressDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, alleyExpressPanelLayout.createSequentialGroup()
-                .addContainerGap(96, Short.MAX_VALUE)
+                .addContainerGap(286, Short.MAX_VALUE)
                 .addComponent(alleyExpressPicture)
                 .addGap(29, 29, 29))
         );
@@ -517,7 +520,7 @@ public class MainFrame extends javax.swing.JFrame
             .addGroup(bookingPanelLayout.createSequentialGroup()
                 .addComponent(polarExpressPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(alleyExpressPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 373, Short.MAX_VALUE))
+                .addComponent(alleyExpressPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 563, Short.MAX_VALUE))
             .addComponent(buttonPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         bookingPanelLayout.setVerticalGroup(
@@ -576,7 +579,7 @@ public class MainFrame extends javax.swing.JFrame
                             .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGroup(trainLinePanelLayout.createSequentialGroup()
                             .addComponent(trainLineBackButton, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 375, Short.MAX_VALUE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 559, Short.MAX_VALUE)
                             .addComponent(trainLineButton, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(34, 34, 34))))
             );
@@ -596,7 +599,7 @@ public class MainFrame extends javax.swing.JFrame
                         .addGroup(trainLinePanelLayout.createSequentialGroup()
                             .addGap(18, 18, 18)
                             .addComponent(trainLineBackButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addContainerGap(123, Short.MAX_VALUE))
+                    .addContainerGap(118, Short.MAX_VALUE))
             );
 
             cardLayoutPanel.add(trainLinePanel, "card3");
@@ -634,7 +637,7 @@ public class MainFrame extends javax.swing.JFrame
                 .addGroup(chooseSeatPanelLayout.createSequentialGroup()
                     .addContainerGap()
                     .addComponent(confirmSeatBackButton, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 166, Short.MAX_VALUE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 350, Short.MAX_VALUE)
                     .addGroup(chooseSeatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, chooseSeatPanelLayout.createSequentialGroup()
                             .addComponent(jLabel5)
@@ -657,7 +660,7 @@ public class MainFrame extends javax.swing.JFrame
                     .addGroup(chooseSeatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel2)
                         .addComponent(refreshChooseSeatsButton))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 251, Short.MAX_VALUE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 254, Short.MAX_VALUE)
                     .addGroup(chooseSeatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(confirmSeatBackButton)
                         .addComponent(confirmSeatsButton))
@@ -669,7 +672,7 @@ public class MainFrame extends javax.swing.JFrame
             jLabel6.setText("Thank you for booking using our service!");
 
             jLabel7.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-            jLabel7.setText("Total Price of Booked Seats:");
+            jLabel7.setText("Train Booked Seats:");
 
             jLabel8.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
             jLabel8.setText("Train Service:");
@@ -680,6 +683,8 @@ public class MainFrame extends javax.swing.JFrame
             jLabel10.setFont(new java.awt.Font("Dialog", 1, 48)); // NOI18N
             jLabel10.setText("RECEIPT");
             jLabel10.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+            jScrollPane2.setViewportView(bookedSeatList);
 
             totalPriceLabel.setText("$0.00");
 
@@ -694,6 +699,9 @@ public class MainFrame extends javax.swing.JFrame
                 }
             });
 
+            jLabel11.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+            jLabel11.setText("Total Price of Booked Seats:");
+
             javax.swing.GroupLayout receiptPanelLayout = new javax.swing.GroupLayout(receiptPanel);
             receiptPanel.setLayout(receiptPanelLayout);
             receiptPanelLayout.setHorizontalGroup(
@@ -701,24 +709,33 @@ public class MainFrame extends javax.swing.JFrame
                 .addGroup(receiptPanelLayout.createSequentialGroup()
                     .addContainerGap()
                     .addGroup(receiptPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel6)
-                        .addGroup(receiptPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 476, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(receiptPanelLayout.createSequentialGroup()
-                                .addGroup(receiptPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel8)
-                                    .addComponent(jLabel9)
-                                    .addComponent(jLabel7))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(receiptPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(selectedTrainLineLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(selectedTrainServiceLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(totalPriceLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                    .addContainerGap(233, Short.MAX_VALUE))
+                        .addGroup(receiptPanelLayout.createSequentialGroup()
+                            .addGap(10, 10, 10)
+                            .addGroup(receiptPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 476, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(receiptPanelLayout.createSequentialGroup()
+                                    .addGroup(receiptPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel9)
+                                        .addComponent(jLabel7)
+                                        .addComponent(jLabel8))
+                                    .addGap(286, 286, 286)
+                                    .addGroup(receiptPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(totalPriceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(selectedTrainLineLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(selectedTrainServiceLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jScrollPane2))
+                                    .addGap(149, 149, 149))))
+                        .addComponent(jLabel6))
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, receiptPanelLayout.createSequentialGroup()
                     .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(backToBookingButton, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap())
+                    .addGap(57, 57, 57))
+                .addGroup(receiptPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(receiptPanelLayout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addComponent(jLabel11)
+                        .addContainerGap(635, Short.MAX_VALUE)))
             );
             receiptPanelLayout.setVerticalGroup(
                 receiptPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -730,18 +747,28 @@ public class MainFrame extends javax.swing.JFrame
                     .addGap(43, 43, 43)
                     .addGroup(receiptPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel8)
-                        .addComponent(selectedTrainServiceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(selectedTrainServiceLabel))
                     .addGap(18, 18, 18)
                     .addGroup(receiptPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel9)
                         .addComponent(selectedTrainLineLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGap(18, 18, 18)
-                    .addGroup(receiptPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel7)
-                        .addComponent(totalPriceLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGap(83, 83, 83)
+                    .addGroup(receiptPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(receiptPanelLayout.createSequentialGroup()
+                            .addGap(18, 18, 18)
+                            .addComponent(jLabel7))
+                        .addGroup(receiptPanelLayout.createSequentialGroup()
+                            .addGap(26, 26, 26)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(totalPriceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(backToBookingButton, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap())
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(receiptPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, receiptPanelLayout.createSequentialGroup()
+                        .addContainerGap(285, Short.MAX_VALUE)
+                        .addComponent(jLabel11)
+                        .addGap(67, 67, 67)))
             );
 
             cardLayoutPanel.add(receiptPanel, "card7");
@@ -1025,13 +1052,24 @@ public class MainFrame extends javax.swing.JFrame
         
         selectedTrainServiceLabel.setText(trainData.getChosenService().toString());
         selectedTrainLineLabel.setText(trainData.getChosenService().getTrainLine()[trainLineList.getSelectedIndex()].toString());
+        
+      
+        //
+
+        bookedSeatList.setModel(new javax.swing.AbstractListModel<String>() {
+               
+                String[] strings = trainData.getSeatsArray();
+                public int getSize() { return strings.length; }
+                public String getElementAt(int i) { return strings[i]; }
+        });
+        
+        
         totalPriceLabel.setText("$" + trainData.getTotalPrice() + ".00");
         
         cardLayoutPanel.removeAll();
         cardLayoutPanel.add(receiptPanel);
         cardLayoutPanel.repaint();
         cardLayoutPanel.revalidate();
-        
         
         
         //Insert Code Here -- switch to next frame - the confirm seats frame
@@ -1098,6 +1136,7 @@ public class MainFrame extends javax.swing.JFrame
     private javax.swing.JButton backToBookingButton;
     private javax.swing.JButton bookAlleyExpress;
     private javax.swing.JButton bookPolarExpress;
+    private javax.swing.JList<String> bookedSeatList;
     private javax.swing.JLabel bookingHeader;
     private javax.swing.JPanel bookingPanel;
     private javax.swing.JPanel buttonPanel;
@@ -1115,6 +1154,7 @@ public class MainFrame extends javax.swing.JFrame
     private javax.swing.JPanel headerPanel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -1124,6 +1164,7 @@ public class MainFrame extends javax.swing.JFrame
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lNameLabel;
     private javax.swing.JTextField lastNameField;
     private javax.swing.JButton loginButton;
