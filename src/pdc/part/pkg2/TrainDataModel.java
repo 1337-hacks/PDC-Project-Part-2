@@ -19,10 +19,10 @@ public class TrainDataModel
     private TrainService chosenService;
     private TrainLine chosenLine;
     private static int[] userBookedServiceLine;
-    //private static int[] userBookedSeatsCoordinates;
     private static int[] result;
     private ArrayList<int[]> userCurrentBookedSeatList = new ArrayList<int[]>(); // stores user's current booked seats
     private ArrayList<int[]> bookedSeatList = new ArrayList<int[]>();            // the official booked seat list. Stores all booked seat information here.
+    private int totalPrice;
     
     private String alleyExpressTrainLines[] = {    //Alley Express Train Lines
                                                     alleyExpressService.getTrainLine()[0].toString(),
@@ -44,6 +44,7 @@ public class TrainDataModel
     {
         userBookedServiceLine = new int[2];
         System.out.println("Train Data Model created");
+        this.totalPrice = 0;
     }
     
     //Functions
@@ -55,16 +56,24 @@ public class TrainDataModel
         for(int seatIndex = 0; seatIndex < userCurrentBookedSeatList.size(); seatIndex++)
         {
             result = new int[5];
-            //userBookedSeatsCoordinates = new int[3];
             
             for(int index = 0; index < userBookedServiceLine.length; index++)
             {
-                result[index] = userBookedServiceLine[index]; 
+                result[index] = userBookedServiceLine[index];
             }
             
             result[2] = userCurrentBookedSeatList.get(seatIndex)[0];
             result[3] = userCurrentBookedSeatList.get(seatIndex)[1];
             result[4] = userCurrentBookedSeatList.get(seatIndex)[2];
+            
+            if(result[2] == 1)
+            {
+                totalPrice += chosenLine.getSeatGrid().getFirstClass()[result[3]][result[4]].getSeatPrice();
+            }
+            if(result[2] == 2)
+            {
+                totalPrice += chosenLine.getSeatGrid().getEconomyClass()[result[3]][result[4]].getSeatPrice();
+            }
             
             bookedSeatList.add(result);
         }
@@ -73,9 +82,22 @@ public class TrainDataModel
         {
             System.out.println(bookedSeatList.get(x)[0] + ", " + bookedSeatList.get(x)[1] + ", " + bookedSeatList.get(x)[2] + ", " + bookedSeatList.get(x)[3] + ", " + bookedSeatList.get(x)[4]);
         }
+        
+        
     }
     
     //Getters and Setters
+    
+    public int getTotalPrice()
+    {
+        return this.totalPrice;
+    }
+    
+    public void setTotalPrice(int totalPrice)
+    {
+        this.totalPrice = totalPrice;
+    }
+    
     public TrainService getAlleyExpressService() 
     {
         return alleyExpressService;

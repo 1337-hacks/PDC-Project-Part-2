@@ -11,9 +11,6 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
 import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -25,20 +22,6 @@ import javax.swing.JFrame;
  */
 public class MainFrame extends javax.swing.JFrame 
 {
-
-    /**
-     * @return the trainLineList
-     */
-    public javax.swing.JList getTrainLineList() {
-        return trainLineList;
-    }
-
-    /**
-     * @param trainLineList the trainLineList to set
-     */
-    public void setTrainLineList(javax.swing.JList trainLineList) {
-        this.trainLineList = trainLineList;
-    }
     //Variables
     private TrainDataModel trainData = new TrainDataModel();
     
@@ -97,7 +80,7 @@ public class MainFrame extends javax.swing.JFrame
     //Train Line
     public void recordTrainLine()
     {
-        this.getTrainData().getUserBookedServiceLine()[1] = getTrainLineList().getSelectedIndex();
+        this.getTrainData().getUserBookedServiceLine()[1] = trainLineList.getSelectedIndex();
     }
     
     //Train Seat
@@ -174,6 +157,16 @@ public class MainFrame extends javax.swing.JFrame
         refreshChooseSeatsButton = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         confirmSeatsButton = new javax.swing.JButton();
+        receiptPanel = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        totalPriceLabel = new javax.swing.JLabel();
+        selectedTrainLineLabel = new javax.swing.JLabel();
+        selectedTrainServiceLabel = new javax.swing.JLabel();
+        backToBookingButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -267,7 +260,6 @@ public class MainFrame extends javax.swing.JFrame
                     .addGroup(loginInnerPanelLayout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(loginInnerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(createButton)
                             .addComponent(createLabel)
                             .addComponent(loginButton, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(loginInnerPanelLayout.createSequentialGroup()
@@ -277,7 +269,8 @@ public class MainFrame extends javax.swing.JFrame
                             .addGroup(loginInnerPanelLayout.createSequentialGroup()
                                 .addComponent(passwordLabel)
                                 .addGap(18, 18, 18)
-                                .addComponent(userPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(userPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(createButton)))
                     .addGroup(loginInnerPanelLayout.createSequentialGroup()
                         .addGap(36, 36, 36)
                         .addComponent(loginLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -664,7 +657,7 @@ public class MainFrame extends javax.swing.JFrame
                     .addGroup(chooseSeatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel2)
                         .addComponent(refreshChooseSeatsButton))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 254, Short.MAX_VALUE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 251, Short.MAX_VALUE)
                     .addGroup(chooseSeatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(confirmSeatBackButton)
                         .addComponent(confirmSeatsButton))
@@ -672,6 +665,87 @@ public class MainFrame extends javax.swing.JFrame
             );
 
             cardLayoutPanel.add(chooseSeatPanel, "card5");
+
+            jLabel6.setText("Thank you for booking using our service!");
+
+            jLabel7.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+            jLabel7.setText("Total Price of Booked Seats:");
+
+            jLabel8.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+            jLabel8.setText("Train Service:");
+
+            jLabel9.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+            jLabel9.setText("Train Line:");
+
+            jLabel10.setFont(new java.awt.Font("Dialog", 1, 48)); // NOI18N
+            jLabel10.setText("RECEIPT");
+            jLabel10.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+            totalPriceLabel.setText("$0.00");
+
+            selectedTrainLineLabel.setText("x to y");
+
+            selectedTrainServiceLabel.setText("[Insert service here]");
+
+            backToBookingButton.setText("Back to Booking");
+            backToBookingButton.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    backToBookingButtonActionPerformed(evt);
+                }
+            });
+
+            javax.swing.GroupLayout receiptPanelLayout = new javax.swing.GroupLayout(receiptPanel);
+            receiptPanel.setLayout(receiptPanelLayout);
+            receiptPanelLayout.setHorizontalGroup(
+                receiptPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(receiptPanelLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(receiptPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel6)
+                        .addGroup(receiptPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 476, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(receiptPanelLayout.createSequentialGroup()
+                                .addGroup(receiptPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel8)
+                                    .addComponent(jLabel9)
+                                    .addComponent(jLabel7))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(receiptPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(selectedTrainLineLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(selectedTrainServiceLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(totalPriceLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                    .addContainerGap(233, Short.MAX_VALUE))
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, receiptPanelLayout.createSequentialGroup()
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(backToBookingButton, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap())
+            );
+            receiptPanelLayout.setVerticalGroup(
+                receiptPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(receiptPanelLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jLabel6)
+                    .addGap(43, 43, 43)
+                    .addGroup(receiptPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel8)
+                        .addComponent(selectedTrainServiceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(18, 18, 18)
+                    .addGroup(receiptPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel9)
+                        .addComponent(selectedTrainLineLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGap(18, 18, 18)
+                    .addGroup(receiptPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel7)
+                        .addComponent(totalPriceLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGap(83, 83, 83)
+                    .addComponent(backToBookingButton, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap())
+            );
+
+            cardLayoutPanel.add(receiptPanel, "card7");
+            receiptPanel.getAccessibleContext().setAccessibleName("receiptPanel");
 
             getContentPane().add(cardLayoutPanel, java.awt.BorderLayout.CENTER);
 
@@ -687,7 +761,7 @@ public class MainFrame extends javax.swing.JFrame
         
         trainData.setChosenService(trainData.getPolarExpressService());
         
-        getTrainLineList().setModel(new javax.swing.AbstractListModel()
+        trainLineList.setModel(new javax.swing.AbstractListModel()
         {
             String[] strings = trainData.getPolarExpressTrainLines();
             @Override
@@ -709,7 +783,7 @@ public class MainFrame extends javax.swing.JFrame
         
         trainData.setChosenService(trainData.getAlleyExpressService());
         
-        getTrainLineList().setModel(new javax.swing.AbstractListModel()
+        trainLineList.setModel(new javax.swing.AbstractListModel()
         {
             String[] strings = trainData.getAlleyExpressTrainLines();
             @Override
@@ -732,10 +806,10 @@ public class MainFrame extends javax.swing.JFrame
     //Choose Train Line
     private void trainLineButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_trainLineButtonActionPerformed
         
-        if(getTrainLineList().getSelectedIndex() >= 0)
+        if(trainLineList.getSelectedIndex() >= 0)
         { 
             //Set Chosen Line to user's choice
-            trainData.setChosenLine(trainData.getChosenService().getTrainLine()[getTrainLineList().getSelectedIndex()]);
+            trainData.setChosenLine(trainData.getChosenService().getTrainLine()[trainLineList.getSelectedIndex()]);
 
             cardLayoutPanel.removeAll();
             cardLayoutPanel.add(chooseSeatPanel);
@@ -947,58 +1021,36 @@ public class MainFrame extends javax.swing.JFrame
         trainData = selectSeats.confirmSeats(trainData);
         
         selectSeats.closeFrame();
+        headerLogOutButton.setVisible(false);
         
-        int index = getTrainLineList().getSelectedIndex();
-
+        selectedTrainServiceLabel.setText(trainData.getChosenService().toString());
+        selectedTrainLineLabel.setText(trainData.getChosenService().getTrainLine()[trainLineList.getSelectedIndex()].toString());
+        totalPriceLabel.setText("$" + trainData.getTotalPrice() + ".00");
+        
+        cardLayoutPanel.removeAll();
+        cardLayoutPanel.add(receiptPanel);
+        cardLayoutPanel.repaint();
+        cardLayoutPanel.revalidate();
+        
+        
+        
         //Insert Code Here -- switch to next frame - the confirm seats frame
-        ReceiptFrame receipt = new ReceiptFrame();
-        receipt.getDisplayService().setText(trainData.getChosenService().getServiceName());
-        receipt.getDisplayTrainLine().setText(trainData.getChosenService().getTrainLine()[index].toString());
-        ///Problem
-        
-        ArrayList<int[]> testing = trainData.getUserCurrentBookedSeatList();
-       
-        String[] bookedSeats;
-        
-        System.out.println("MAINFRAME");
-       
-       
-       //TOTAL PRICE OF SELECTED SEATS
-       double price =0.0;
-       int[] test;
-        for(int seatIndex = 0; seatIndex < trainData.getUserCurrentBookedSeatList().size(); seatIndex++)
-        {
-            test = new int[5];
-            //userBookedSeatsCoordinates = new int[3];
-            
-            for(int inde = 0; inde < trainData.getUserBookedServiceLine().length; inde++)
-            {
-                test[inde] = trainData.getUserBookedServiceLine()[inde];
-            }
-            
-            test[2] = trainData.getUserCurrentBookedSeatList().get(seatIndex)[0];
-            test[3] = trainData.getUserCurrentBookedSeatList().get(seatIndex)[1];
-            test[4] = trainData.getUserCurrentBookedSeatList().get(seatIndex)[2];
-            
-            //
-            if(test[2] == 1)
-            {
-               price += trainData.getChosenService().getTrainLine()[index].getSeatGrid().getFirstClass()[test[3]][test[4]].getSeatPrice();
-            }
-            else if (test[2] == 2)
-            {
-                price += trainData.getChosenService().getTrainLine()[index].getSeatGrid().getEconomyClass()[test[3]][test[4]].getSeatPrice();
-            }
-            
-            
-        }
-
-       receipt.getDisplayPrice().setText(String.valueOf(price));
-      
-       receipt.setLocationRelativeTo(null);
-       receipt.setVisible(true);
     }//GEN-LAST:event_confirmSeatsButtonActionPerformed
+
+    private void backToBookingButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backToBookingButtonActionPerformed
+        // TODO add your handling code here:
+        
+        headerLogOutButton.setVisible(true);
+        
+        cardLayoutPanel.removeAll();
+        cardLayoutPanel.add(bookingPanel);
+        cardLayoutPanel.repaint();
+        cardLayoutPanel.revalidate();
+    }//GEN-LAST:event_backToBookingButtonActionPerformed
     
+    
+    
+
     
     /**
      * @param args the command line arguments
@@ -1043,6 +1095,7 @@ public class MainFrame extends javax.swing.JFrame
     private javax.swing.JLabel alleyExpressDescription;
     private javax.swing.JPanel alleyExpressPanel;
     private javax.swing.JLabel alleyExpressPicture;
+    private javax.swing.JButton backToBookingButton;
     private javax.swing.JButton bookAlleyExpress;
     private javax.swing.JButton bookPolarExpress;
     private javax.swing.JLabel bookingHeader;
@@ -1061,10 +1114,15 @@ public class MainFrame extends javax.swing.JFrame
     private javax.swing.JButton headerLogOutButton;
     private javax.swing.JPanel headerPanel;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lNameLabel;
     private javax.swing.JTextField lastNameField;
@@ -1078,6 +1136,7 @@ public class MainFrame extends javax.swing.JFrame
     private javax.swing.JPanel polarExpressPanel;
     private javax.swing.JLabel polarExpressPicture;
     private javax.swing.JLabel rPasswordLabel;
+    private javax.swing.JPanel receiptPanel;
     private javax.swing.JButton refreshChooseSeatsButton;
     private javax.swing.JPasswordField regisPasswordField;
     private javax.swing.JTextField regisUserField;
@@ -1085,6 +1144,9 @@ public class MainFrame extends javax.swing.JFrame
     private javax.swing.JPanel registerPanel;
     private javax.swing.JButton register_backButton;
     private javax.swing.JButton register_createButton;
+    private javax.swing.JLabel selectedTrainLineLabel;
+    private javax.swing.JLabel selectedTrainServiceLabel;
+    private javax.swing.JLabel totalPriceLabel;
     private javax.swing.JButton trainLineBackButton;
     private javax.swing.JButton trainLineButton;
     private javax.swing.JList trainLineList;

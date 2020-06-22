@@ -21,7 +21,6 @@ public class SelectSeatsFrame
     private JPanel buttonPanel;
     private JLabel header;
     private JButton backButton;
-    private JButton confirmSeatsButton;
     private ArrayList<int[]> selectedSeats;
     private TrainDataModel trainDataHolder;
     
@@ -50,19 +49,10 @@ public class SelectSeatsFrame
         this.header.setFont(new Font("Dialog", Font.BOLD, 24));
         
         this.backButton = new JButton("Back");
-        this.confirmSeatsButton = new JButton("Confirm Seats");
-        this.confirmSeatsButton.addActionListener(new ActionListener() 
-        {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                
-            } 
-        });
         
         this.buttonPanel = new JPanel();
         this.buttonPanel.setLayout(new BorderLayout(5, 5));
-        this.buttonPanel.add(this.backButton, BorderLayout.WEST);
-        this.buttonPanel.add(this.confirmSeatsButton, BorderLayout.EAST);
+        this.buttonPanel.add(this.backButton, BorderLayout.CENTER);
         
         
         this.seatGridPanel.setVisible(true);

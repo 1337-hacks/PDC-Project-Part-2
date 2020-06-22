@@ -19,7 +19,6 @@ import java.util.ArrayList;
 
 public class SeatGrid extends javax.swing.JPanel
 {
-
     //Variables
     
     private int columnNumber;
@@ -32,7 +31,6 @@ public class SeatGrid extends javax.swing.JPanel
     private JPanel economyClassPanel;
     private JPanel emptyPanel;
     private static int[] seat;
-    
     
     //Constructors
     
@@ -104,7 +102,6 @@ public class SeatGrid extends javax.swing.JPanel
                     else //If seat is free
                     {
                         this.economyClassPanel.add(this.economyClass[x][y]);
-                        
                     }
                     
                     x++;
@@ -139,7 +136,6 @@ public class SeatGrid extends javax.swing.JPanel
         }
         
     }
-    
     
     //Methods
 

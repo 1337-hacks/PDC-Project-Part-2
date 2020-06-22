@@ -31,16 +31,17 @@ public class TrainBookingProgram
         }
     }
     
+    
+    
     public static void bookedSeats(MainFrame window)
     {
-         
+        
     }
     
     public static void main(String[] args)
     {
         DBManager database = new DBManager();
         MainFrame window = new MainFrame();
-        TrainDataModel trainDataHolder = new TrainDataModel();
     
         database.createTable();
         
@@ -48,7 +49,6 @@ public class TrainBookingProgram
         database.view("bookings");
         window.setVisible(true);
         
-        trainDataHolder.combineLists();
         database.closeConnection();
     }    
 }
