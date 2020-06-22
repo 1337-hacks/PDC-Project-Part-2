@@ -216,6 +216,8 @@ public class SeatGrid extends javax.swing.JPanel
                     seat[1] = x;
                     seat[2] = y;
                     list.add(seat);
+                    
+                    this.firstClass[x][y].setEnabled(false);
                 }
             }
             
@@ -233,6 +235,8 @@ public class SeatGrid extends javax.swing.JPanel
                     seat[1] = x;
                     seat[2] = y;
                     list.add(seat);
+                    
+                    this.economyClass[x][y].setEnabled(false);
                 }
             }
         }

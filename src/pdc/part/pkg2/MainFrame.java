@@ -12,8 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
+import java.util.ArrayList;
 
 
 /**
@@ -23,7 +22,7 @@ import javax.swing.JFrame;
 public class MainFrame extends javax.swing.JFrame 
 {
     //Variables
-    private TrainDataModel trainData = new TrainDataModel();
+    private static TrainDataModel trainData;
     
     //FOR Database
     Connection conn;
@@ -38,8 +37,9 @@ public class MainFrame extends javax.swing.JFrame
     DBManager data = new DBManager();
     
     //Constructors
-    public MainFrame() 
+    public MainFrame(TrainDataModel trainData) 
     {
+        this.trainData = trainData;
         initComponents();
         headerLogOutButton.setVisible(false);
         this.setTitle("NZT Train Booking Program");
@@ -58,9 +58,14 @@ public class MainFrame extends javax.swing.JFrame
     
     //Methods
     
-    public TrainDataModel getTrainData()
+    public static TrainDataModel getTrainData()
     {
-        return this.trainData;
+        return trainData;
+    }
+    
+    public ArrayList<int[]> getBookedSeats()
+    {
+        return trainData.getBookedSeatList();
     }
     
     //Train Service
@@ -1024,21 +1029,20 @@ public class MainFrame extends javax.swing.JFrame
         headerLogOutButton.setVisible(false);
         
         selectedTrainServiceLabel.setText(trainData.getChosenService().toString());
-        selectedTrainLineLabel.setText(trainData.getChosenService().getTrainLine()[trainLineList.getSelectedIndex()].toString());
+        selectedTrainLineLabel.setText(trainData.getChosenLine().toString());
         totalPriceLabel.setText("$" + trainData.getTotalPrice() + ".00");
+        
+        data.insertBookingTable("bean", "hello", trainData.getTotalPrice());
+        
+        trainData.setTotalPrice(0);
         
         cardLayoutPanel.removeAll();
         cardLayoutPanel.add(receiptPanel);
         cardLayoutPanel.repaint();
         cardLayoutPanel.revalidate();
-        
-        
-        
-        //Insert Code Here -- switch to next frame - the confirm seats frame
     }//GEN-LAST:event_confirmSeatsButtonActionPerformed
 
     private void backToBookingButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backToBookingButtonActionPerformed
-        // TODO add your handling code here:
         
         headerLogOutButton.setVisible(true);
         
@@ -1050,7 +1054,6 @@ public class MainFrame extends javax.swing.JFrame
     
     
     
-
     
     /**
      * @param args the command line arguments
@@ -1086,7 +1089,7 @@ public class MainFrame extends javax.swing.JFrame
         {
             public void run() 
             {
-                new MainFrame().setVisible(true);
+                new MainFrame(getTrainData()).setVisible(true);
             }
         });
     }

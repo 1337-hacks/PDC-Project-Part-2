@@ -20,7 +20,7 @@ public class SelectSeatsFrame
     private SeatGrid seatGridPanel;
     private JPanel buttonPanel;
     private JLabel header;
-    private JButton backButton;
+    private JLabel selectSeatsDescriptionLabel;
     private ArrayList<int[]> selectedSeats;
     private TrainDataModel trainDataHolder;
     
@@ -48,11 +48,11 @@ public class SelectSeatsFrame
         this.header = new JLabel("Select seats");
         this.header.setFont(new Font("Dialog", Font.BOLD, 24));
         
-        this.backButton = new JButton("Back");
+        this.selectSeatsDescriptionLabel = new JLabel("FC = First Class, and EC = Economy Class.");
         
         this.buttonPanel = new JPanel();
         this.buttonPanel.setLayout(new BorderLayout(5, 5));
-        this.buttonPanel.add(this.backButton, BorderLayout.CENTER);
+        this.buttonPanel.add(this.selectSeatsDescriptionLabel, BorderLayout.CENTER);
         
         
         this.seatGridPanel.setVisible(true);

@@ -67,10 +67,13 @@ public class DBManager
         {
             statement = conn.createStatement();
             String bookings_tableName = "BOOKINGS";
-            String tableCreateString = "CREATE TABLE " + bookings_tableName + " (BOOKING_ID INT NOT NULL PRIMARY KEY, " +
-                                       "FULL_NAME VARCHAR(50), " + 
-                                       "SEAT VARCHAR(50), " +
-                                       "TOTAL_PRICE INT)";
+            String tableCreateString =  "CREATE TABLE " + bookings_tableName + 
+                                        "(" +
+                                        "BOOKING_ID INT NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY(Start with 1, Increment by 1) , " +
+                                        "FULL_NAME VARCHAR(50), " + 
+                                        "SEAT VARCHAR(50), " +
+                                        "TOTAL_PRICE INT" +
+                                        ")";
 
             data = conn.getMetaData();
             rs = data.getTables(null, null, bookings_tableName, null);
@@ -167,6 +170,27 @@ public class DBManager
       
     }
     
+    //FUNCTION NEEDS WORK
+    public void insertBookingTable( String fullName, String seats, int totalPrice)
+    {
+        try
+        {
+            conn = DriverManager.getConnection(url, username, password);
+            statement = conn.createStatement();
+            statement.executeUpdate("insert into BOOKINGS (FULL_NAME, SEAT, TOTAL_PRICE) values"
+                               +  "('" + fullName + "' , '" + seats + "' , '" + totalPrice + "')");
+            
+            System.out.println("Values inserted to Bookings Table"); 
+
+            conn = DriverManager.getConnection("jdbc:derby:TrainBookingDB; shutdown=true");
+        } 
+        catch (SQLException ex)
+        {
+            System.err.println(ex.getMessage());
+        }
+      
+    }
+    
 
     //Getters and Setters
     
@@ -217,6 +241,4 @@ public class DBManager
     public void setRs(ResultSet rs) {
         this.rs = rs;
     }
-    
-    
 }

@@ -116,6 +116,13 @@ public class Seat extends JToggleButton
         this.seatTaken = seatTaken;
     }
     
+    //Used to book seat and disable this seat (button) from being booked
+    public void bookSeat()
+    {
+        this.seatTaken = true;
+        this.setEnabled(false);
+    }
+    
     public int getSeatX() {
         return seatX;
     }
