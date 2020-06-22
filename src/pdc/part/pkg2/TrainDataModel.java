@@ -5,6 +5,7 @@
 package pdc.part.pkg2;
 
 import java.util.ArrayList;
+import java.util.*;
 
 /**
  *
@@ -23,6 +24,7 @@ public class TrainDataModel
     private ArrayList<int[]> userCurrentBookedSeatList = new ArrayList<int[]>(); // stores user's current booked seats
     private ArrayList<int[]> bookedSeatList = new ArrayList<int[]>();            // the official booked seat list. Stores all booked seat information here.
     private int totalPrice;
+    private String[] seatsArray;
     
     private String alleyExpressTrainLines[] = {    //Alley Express Train Lines
                                                     alleyExpressService.getTrainLine()[0].toString(),
@@ -52,7 +54,7 @@ public class TrainDataModel
     public void combineLists()
     {
         
-        
+        this.seatsArray = new String[userCurrentBookedSeatList.size()];
         for(int seatIndex = 0; seatIndex < userCurrentBookedSeatList.size(); seatIndex++)
         {
             result = new int[5];
@@ -69,10 +71,12 @@ public class TrainDataModel
             if(result[2] == 1)
             {
                 totalPrice += chosenLine.getSeatGrid().getFirstClass()[result[3]][result[4]].getSeatPrice();
+                seatsArray[seatIndex] = "First Class Seats [" + String.valueOf(result[3]) + "," + String.valueOf(result[4]) + "]";
             }
             if(result[2] == 2)
             {
                 totalPrice += chosenLine.getSeatGrid().getEconomyClass()[result[3]][result[4]].getSeatPrice();
+                seatsArray[seatIndex] = "Economy Class Seats [" + String.valueOf(result[3]) + "," + String.valueOf(result[4]) + "]";
             }
             
             bookedSeatList.add(result);
@@ -85,6 +89,8 @@ public class TrainDataModel
         
         
     }
+    
+    
     
     //Getters and Setters
     
@@ -176,5 +182,19 @@ public class TrainDataModel
     
     public void setUserCurrentBookedSeatList(ArrayList<int[]> userCurrentBookedSeatList) {
         this.userCurrentBookedSeatList = userCurrentBookedSeatList;
+    }
+
+    /**
+     * @return the seatsArray
+     */
+    public String[] getSeatsArray() {
+        return seatsArray;
+    }
+
+    /**
+     * @param seatsArray the seatsArray to set
+     */
+    public void setSeatsArray(String[] seatsArray) {
+        this.seatsArray = seatsArray;
     }
 }
