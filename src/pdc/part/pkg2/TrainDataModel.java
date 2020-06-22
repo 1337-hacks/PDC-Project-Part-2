@@ -59,7 +59,7 @@ public class TrainDataModel
             
             for(int index = 0; index < userBookedServiceLine.length; index++)
             {
-                result[index] = userBookedServiceLine[index];
+                result[index] = userBookedServiceLine[index]; 
             }
             
             result[2] = userCurrentBookedSeatList.get(seatIndex)[0];

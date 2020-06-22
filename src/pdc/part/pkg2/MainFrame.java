@@ -12,6 +12,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
 import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -955,46 +957,44 @@ public class MainFrame extends javax.swing.JFrame
         ///Problem
         
         ArrayList<int[]> testing = trainData.getUserCurrentBookedSeatList();
-        int yCoordEconomy = trainData.getChosenService().getTrainLine()[index].getSeatGrid().getEconomyClassRows();
-        int yCoordFirst = trainData.getChosenService().getTrainLine()[index].getSeatGrid().getFirstClassRows();
-        int xCoord = trainData.getChosenService().getTrainLine()[index].getSeatGrid().getSeatNumber();
+       
+        String[] bookedSeats;
         
-        
-       // double priceEconomy = 0.0;
-        //priceEconomy += trainData.getChosenService().getTrainLine()[index].getSeatGrid().getEconomyClass()[xCoord][yCoordEconomy].getSeatPrice();
-        //double priceFirst = 0.0;
-        //priceFirst += trainData.getChosenService().getTrainLine()[index].getSeatGrid().getFirstClass()[xCoord][yCoordFirst].getSeatPrice();
-        
-        double totalPrice = 0.0;
-        totalPrice += trainData.getChosenService().getTrainLine()[index].getSeatGrid().getPrice();
-        /*
-        for(int x = 0; x < testing.size(); x++)
+        System.out.println("MAINFRAME");
+       
+       
+       //TOTAL PRICE OF SELECTED SEATS
+       double price =0.0;
+       int[] test;
+        for(int seatIndex = 0; seatIndex < trainData.getUserCurrentBookedSeatList().size(); seatIndex++)
         {
-            if(testing.get(x)[0] == 1) // polar
+            test = new int[5];
+            //userBookedSeatsCoordinates = new int[3];
+            
+            for(int inde = 0; inde < trainData.getUserBookedServiceLine().length; inde++)
             {
-               if(testing.get(x)[1]== 1) // firstclass
-               {
-                   price += trainData.getPolarExpressService().getTrainLine()[index].getSeatGrid().getFirstClass()[xCoord][yCoordFirst].getTotalPrice();
-               }
-               else if(testing.get(x)[1] == 2)//economyclass
-               {
-                    price += trainData.getPolarExpressService().getTrainLine()[index].getSeatGrid().getEconomyClass()[xCoord][yCoordEconomy].getTotalPrice();
-               }
+                test[inde] = trainData.getUserBookedServiceLine()[inde];
             }
-            else if(testing.get(x)[0] == 2)
+            
+            test[2] = trainData.getUserCurrentBookedSeatList().get(seatIndex)[0];
+            test[3] = trainData.getUserCurrentBookedSeatList().get(seatIndex)[1];
+            test[4] = trainData.getUserCurrentBookedSeatList().get(seatIndex)[2];
+            
+            //
+            if(test[2] == 1)
             {
-                if(testing.get(x)[1]== 1) // firstclass
-               {
-                   price += trainData.getAlleyExpressService().getTrainLine()[index].getSeatGrid().getFirstClass()[xCoord][yCoordFirst].getTotalPrice();
-               }
-               else if(testing.get(x)[1] == 2)//economyclass
-               {
-                    price += trainData.getAlleyExpressService().getTrainLine()[index].getSeatGrid().getEconomyClass()[xCoord][yCoordEconomy].getTotalPrice();
-               }
+               price += trainData.getChosenService().getTrainLine()[index].getSeatGrid().getFirstClass()[test[3]][test[4]].getSeatPrice();
             }
-        } */
-   
-      receipt.getDisplayPrice().setText(String.valueOf(totalPrice));
+            else if (test[2] == 2)
+            {
+                price += trainData.getChosenService().getTrainLine()[index].getSeatGrid().getEconomyClass()[test[3]][test[4]].getSeatPrice();
+            }
+            
+            
+        }
+
+       receipt.getDisplayPrice().setText(String.valueOf(price));
+      
        receipt.setLocationRelativeTo(null);
        receipt.setVisible(true);
     }//GEN-LAST:event_confirmSeatsButtonActionPerformed
