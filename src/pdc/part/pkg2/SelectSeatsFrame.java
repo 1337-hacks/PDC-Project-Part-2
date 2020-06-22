@@ -56,7 +56,7 @@ public class SelectSeatsFrame
             @Override
             public void actionPerformed(ActionEvent e) {
                 
-            }
+            } 
         });
         
         this.buttonPanel = new JPanel();

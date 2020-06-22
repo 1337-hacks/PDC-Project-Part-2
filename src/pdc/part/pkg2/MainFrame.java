@@ -11,6 +11,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -22,6 +23,20 @@ import javax.swing.JFrame;
  */
 public class MainFrame extends javax.swing.JFrame 
 {
+
+    /**
+     * @return the trainLineList
+     */
+    public javax.swing.JList getTrainLineList() {
+        return trainLineList;
+    }
+
+    /**
+     * @param trainLineList the trainLineList to set
+     */
+    public void setTrainLineList(javax.swing.JList trainLineList) {
+        this.trainLineList = trainLineList;
+    }
     //Variables
     private TrainDataModel trainData = new TrainDataModel();
     
@@ -80,7 +95,7 @@ public class MainFrame extends javax.swing.JFrame
     //Train Line
     public void recordTrainLine()
     {
-        this.getTrainData().getUserBookedServiceLine()[1] = trainLineList.getSelectedIndex();
+        this.getTrainData().getUserBookedServiceLine()[1] = getTrainLineList().getSelectedIndex();
     }
     
     //Train Seat
@@ -647,7 +662,7 @@ public class MainFrame extends javax.swing.JFrame
                     .addGroup(chooseSeatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel2)
                         .addComponent(refreshChooseSeatsButton))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 251, Short.MAX_VALUE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 254, Short.MAX_VALUE)
                     .addGroup(chooseSeatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(confirmSeatBackButton)
                         .addComponent(confirmSeatsButton))
@@ -670,7 +685,7 @@ public class MainFrame extends javax.swing.JFrame
         
         trainData.setChosenService(trainData.getPolarExpressService());
         
-        trainLineList.setModel(new javax.swing.AbstractListModel()
+        getTrainLineList().setModel(new javax.swing.AbstractListModel()
         {
             String[] strings = trainData.getPolarExpressTrainLines();
             @Override
@@ -692,7 +707,7 @@ public class MainFrame extends javax.swing.JFrame
         
         trainData.setChosenService(trainData.getAlleyExpressService());
         
-        trainLineList.setModel(new javax.swing.AbstractListModel()
+        getTrainLineList().setModel(new javax.swing.AbstractListModel()
         {
             String[] strings = trainData.getAlleyExpressTrainLines();
             @Override
@@ -715,10 +730,10 @@ public class MainFrame extends javax.swing.JFrame
     //Choose Train Line
     private void trainLineButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_trainLineButtonActionPerformed
         
-        if(trainLineList.getSelectedIndex() >= 0)
+        if(getTrainLineList().getSelectedIndex() >= 0)
         { 
             //Set Chosen Line to user's choice
-            trainData.setChosenLine(trainData.getChosenService().getTrainLine()[trainLineList.getSelectedIndex()]);
+            trainData.setChosenLine(trainData.getChosenService().getTrainLine()[getTrainLineList().getSelectedIndex()]);
 
             cardLayoutPanel.removeAll();
             cardLayoutPanel.add(chooseSeatPanel);
@@ -931,12 +946,59 @@ public class MainFrame extends javax.swing.JFrame
         
         selectSeats.closeFrame();
         
+        int index = getTrainLineList().getSelectedIndex();
+
         //Insert Code Here -- switch to next frame - the confirm seats frame
+        ReceiptFrame receipt = new ReceiptFrame();
+        receipt.getDisplayService().setText(trainData.getChosenService().getServiceName());
+        receipt.getDisplayTrainLine().setText(trainData.getChosenService().getTrainLine()[index].toString());
+        ///Problem
+        
+        ArrayList<int[]> testing = trainData.getUserCurrentBookedSeatList();
+        int yCoordEconomy = trainData.getChosenService().getTrainLine()[index].getSeatGrid().getEconomyClassRows();
+        int yCoordFirst = trainData.getChosenService().getTrainLine()[index].getSeatGrid().getFirstClassRows();
+        int xCoord = trainData.getChosenService().getTrainLine()[index].getSeatGrid().getSeatNumber();
+        
+        
+       // double priceEconomy = 0.0;
+        //priceEconomy += trainData.getChosenService().getTrainLine()[index].getSeatGrid().getEconomyClass()[xCoord][yCoordEconomy].getSeatPrice();
+        //double priceFirst = 0.0;
+        //priceFirst += trainData.getChosenService().getTrainLine()[index].getSeatGrid().getFirstClass()[xCoord][yCoordFirst].getSeatPrice();
+        
+        double totalPrice = 0.0;
+        totalPrice += trainData.getChosenService().getTrainLine()[index].getSeatGrid().getPrice();
+        /*
+        for(int x = 0; x < testing.size(); x++)
+        {
+            if(testing.get(x)[0] == 1) // polar
+            {
+               if(testing.get(x)[1]== 1) // firstclass
+               {
+                   price += trainData.getPolarExpressService().getTrainLine()[index].getSeatGrid().getFirstClass()[xCoord][yCoordFirst].getTotalPrice();
+               }
+               else if(testing.get(x)[1] == 2)//economyclass
+               {
+                    price += trainData.getPolarExpressService().getTrainLine()[index].getSeatGrid().getEconomyClass()[xCoord][yCoordEconomy].getTotalPrice();
+               }
+            }
+            else if(testing.get(x)[0] == 2)
+            {
+                if(testing.get(x)[1]== 1) // firstclass
+               {
+                   price += trainData.getAlleyExpressService().getTrainLine()[index].getSeatGrid().getFirstClass()[xCoord][yCoordFirst].getTotalPrice();
+               }
+               else if(testing.get(x)[1] == 2)//economyclass
+               {
+                    price += trainData.getAlleyExpressService().getTrainLine()[index].getSeatGrid().getEconomyClass()[xCoord][yCoordEconomy].getTotalPrice();
+               }
+            }
+        } */
+   
+      receipt.getDisplayPrice().setText(String.valueOf(totalPrice));
+       receipt.setLocationRelativeTo(null);
+       receipt.setVisible(true);
     }//GEN-LAST:event_confirmSeatsButtonActionPerformed
     
-    
-    
-
     
     /**
      * @param args the command line arguments

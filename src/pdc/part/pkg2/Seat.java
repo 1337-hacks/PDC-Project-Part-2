@@ -19,8 +19,10 @@ import java.awt.event.*;
  * @author Elijah 18023249 and John 18017056
  */
 
-public class Seat extends JToggleButton
+public class Seat extends JToggleButton 
+        
 {
+
     //Variables
     private double seatPrice;
     private String[] seatFeatures;
@@ -47,6 +49,8 @@ public class Seat extends JToggleButton
         this.seatFeatures = seatFeatures;
         this.seatName = seatName;
         this.seatTaken = false;
+
+
         
         //ItemListener
         this.addItemListener(new ItemListener() 
@@ -58,18 +62,25 @@ public class Seat extends JToggleButton
                 {
                     System.out.println("button is selected: " + seatX + ", " + seatY);
                     seatTaken = true;
+       
                 } 
                 else if(ev.getStateChange()==ItemEvent.DESELECTED)
                 {
                     System.out.println("button is not selected");
+                    
                     seatTaken = false;
                 }
             }
+           
         });
+        
+    
     }
     
     //Methods
 
+  
+    
     /**
      * @return the seatPrice
      */
@@ -139,4 +150,6 @@ public class Seat extends JToggleButton
     {
         return "Seat Class: " + this.seatName + "\nFeatures: " + Arrays.toString(seatFeatures) + "\nPrice: " + this.getSeatPrice();
     }
+
+  
 }

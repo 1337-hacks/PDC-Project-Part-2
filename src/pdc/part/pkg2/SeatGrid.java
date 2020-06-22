@@ -19,6 +19,23 @@ import java.util.ArrayList;
 
 public class SeatGrid extends javax.swing.JPanel
 {
+
+    /**
+     * @return the price
+     */
+    public double getPrice() {
+        return price;
+    }
+
+    /**
+     * @param price the price to set
+     */
+    public void setPrice(double price) {
+        this.price = price;
+    }
+    /**
+     * @return the firstClassPanel
+     */
     //Variables
     
     private int columnNumber;
@@ -31,6 +48,8 @@ public class SeatGrid extends javax.swing.JPanel
     private JPanel economyClassPanel;
     private JPanel emptyPanel;
     private static int[] seat;
+    private double price;
+    
     
     //Constructors
     
@@ -102,6 +121,8 @@ public class SeatGrid extends javax.swing.JPanel
                     else //If seat is free
                     {
                         this.economyClassPanel.add(this.economyClass[x][y]);
+                        price += this.getEconomyClass()[x][y].getSeatPrice();
+                        
                     }
                     
                     x++;
@@ -126,6 +147,7 @@ public class SeatGrid extends javax.swing.JPanel
                     else //If seat is free
                     {
                         this.firstClassPanel.add(this.firstClass[x][y]);
+                           price += this.getFirstClass()[x][y].getSeatPrice();
                     }
                     
                     x++;
@@ -136,6 +158,7 @@ public class SeatGrid extends javax.swing.JPanel
         }
         
     }
+    
     
     //Methods
 
