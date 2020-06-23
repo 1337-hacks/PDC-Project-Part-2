@@ -8,12 +8,16 @@
 
 package pdc.part.pkg2;
 
+import java.awt.*;
+import javax.swing.*;
+import java.util.ArrayList;
+
 /**
  *
  * @author Elijah 18023249 and John 18017056
  */
 
-public class SeatGrid 
+public class SeatGrid extends javax.swing.JPanel
 {
     //Variables
     
@@ -23,11 +27,17 @@ public class SeatGrid
     private int firstClassRows;
     private EconomyClass [][] economyClass;
     private FirstClass [][] firstClass;
+    private JPanel firstClassPanel;
+    private JPanel economyClassPanel;
+    private JPanel emptyPanel;
+    private static int[] seat;
     
     //Constructors
     
     public SeatGrid()
     {
+        super();
+        
         this.seatNumber = 0;
         this.economyClassRows = 0;
         this.economyClass = new EconomyClass[0][0];
@@ -37,6 +47,18 @@ public class SeatGrid
     
     public SeatGrid(int aisleNumber, int seatNumber, int economyClassRows, int firstClassRows)
     {
+        super();
+        
+        setLayout(new BorderLayout(10, 10));
+        this.firstClassPanel = new JPanel(new GridLayout(firstClassRows, seatNumber));
+        this.economyClassPanel = new JPanel(new GridLayout(economyClassRows, seatNumber));
+        
+        this.emptyPanel = new JPanel();
+        this.emptyPanel.setSize(10, 10);
+        
+        add(firstClassPanel, BorderLayout.NORTH);
+        add(economyClassPanel, BorderLayout.CENTER);
+        
         this.columnNumber = aisleNumber;
         this.seatNumber = seatNumber;
         this.economyClassRows = economyClassRows;
@@ -44,12 +66,15 @@ public class SeatGrid
         this.economyClass = new EconomyClass[seatNumber][economyClassRows];
         this.firstClass = new FirstClass[seatNumber][firstClassRows];
         
+        this.firstClassPanel.setBorder(BorderFactory.createTitledBorder("First Class"));
+        this.economyClassPanel.setBorder(BorderFactory.createTitledBorder("Economy Class"));
+        
         //Economy Class instantiation
         for(int y = 0; y < economyClassRows; y++)
         {
             for(int x = 0; x < seatNumber; x++)
             {
-                this.economyClass[x][y] = new EconomyClass();
+                this.economyClass[x][y] = new EconomyClass(x, y);
             }
         }
         
@@ -58,9 +83,58 @@ public class SeatGrid
         {
             for(int x = 0; x < seatNumber; x++)
             {
-                this.firstClass[x][y] = new FirstClass();
+                this.firstClass[x][y] = new FirstClass(x, y);
             }
         }
+        
+        //Economy Class Swing Buttons Instantiation
+        for(int y = 0; y < economyClassRows; y++)
+        {
+            for(int x = 0; x < seatNumber; x++)
+            {
+                for(int z = 0; z < aisleNumber; z++)
+                {
+                    if(this.economyClass[x][y].isSeatTaken() == true) //If seat is booked
+                    {
+                        this.economyClassPanel.add(this.economyClass[x][y]);
+                        this.economyClass[x][y].setEnabled(false);
+                    }
+                    else //If seat is free
+                    {
+                        this.economyClassPanel.add(this.economyClass[x][y]);
+                    }
+                    
+                    x++;
+                }
+                this.economyClassPanel.add(new JPanel());
+                x--;
+            }
+        }
+        
+        //First Class Swing Buttons Instantiation
+        for(int y = 0; y < firstClassRows; y++)
+        {
+            for(int x = 0; x < seatNumber; x++)
+            {
+                for(int z = 0; z < aisleNumber; z++)
+                {
+                    if(this.firstClass[x][y].isSeatTaken() == true) //If seat is booked
+                    {
+                        this.firstClassPanel.add(this.firstClass[x][y]);
+                        this.firstClass[x][y].setEnabled(false);
+                    }
+                    else //If seat is free
+                    {
+                        this.firstClassPanel.add(this.firstClass[x][y]);
+                    }
+                    
+                    x++;
+                }
+                this.firstClassPanel.add(new JPanel());
+                x--;
+            }
+        }
+        
     }
     
     //Methods
@@ -126,76 +200,51 @@ public class SeatGrid
         this.columnNumber = columnNumber;
     }
     
-    //Display the seating grid layout
-    public void displayGrid()
+    
+    public ArrayList<int[]> returnUserSelectedSeats()
     {
-        System.out.println("=== Seat Grid ===\n");
+        ArrayList<int[]> list = new ArrayList<>();
         
-        //Print Out First Class Rows
-        for(int y = 0; y < this.firstClassRows; y++)
+        for(int y = 0; y < firstClassRows; y++) //First Class
         {
-            for(int x = 0; x < this.seatNumber; x++)
-            {                
-                for(int z = 0; z < this.columnNumber; z++)
+            for(int x = 0; x < seatNumber; x++)
+            {   
+                if(this.firstClass[x][y].isSeatTaken() == true && this.firstClass[x][y].isEnabled() == true)
                 {
-                    System.out.print("[");
-
-                    if(this.firstClass[x][y].isSeatTaken() == true)
-                    {
-                        System.out.print("X");
-                    }
-                    else
-                    {
-                        System.out.print(" ");
-                    }
-
-                    System.out.print("]");
+                    seat = new int[3];
+                    seat[0] = 1;
+                    seat[1] = x;
+                    seat[2] = y;
+                    list.add(seat);
                     
-                    x++;
+                    this.firstClass[x][y].setEnabled(false);
                 }
-                 
-                System.out.print("  ");
-                x--;
             }
             
             System.out.println("");
         }
         
-        
-        System.out.println("");
-        
-        //Print Out Economy Class Rows
-        for(int y = 0; y < this.economyClassRows; y++)
+        for(int y = 0; y < economyClassRows; y++) //Economy Class
         {
-            for(int x = 0; x < this.seatNumber; x++)
-            {                
-                for(int z = 0; z < this.columnNumber; z++)
+            for(int x = 0; x < seatNumber; x++)
+            {
+                if(this.economyClass[x][y].isSeatTaken() == true && this.economyClass[x][y].isEnabled() == true)
                 {
-                    System.out.print("[");
-
-                    if(this.economyClass[x][y].isSeatTaken() == true)
-                    {
-                        System.out.print("X");
-                    }
-                    else
-                    {
-                        System.out.print(" ");
-                    }
-
-                    System.out.print("]");
+                    seat = new int[3];
+                    seat[0] = 2;
+                    seat[1] = x;
+                    seat[2] = y;
+                    list.add(seat);
                     
-                    x++;
+                    this.economyClass[x][y].setEnabled(false);
                 }
-                 
-                System.out.print("  ");
-                x--;
             }
-            System.out.println("");
         }
+        
+        return list;
     }
     
-    
-//Check if first class seating is full
+    //Check if first class seating is full
     public boolean isFirstClassFull()
     {
         for(int y = 0; y < this.firstClassRows; y++)

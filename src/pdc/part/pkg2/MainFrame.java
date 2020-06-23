@@ -5,6 +5,7 @@
  */
 package pdc.part.pkg2;
 
+import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
@@ -12,17 +13,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
-import javax.swing.ImageIcon;
+import java.util.ArrayList;
+import javax.swing.*;
 
 
 /**
  *
  * @author elija
  */
-public class MainWindow extends javax.swing.JFrame 
+public class MainFrame extends javax.swing.JFrame 
 {
     //Variables
-    private TrainDataModel trainData = new TrainDataModel();
+    private static TrainDataModel trainData;
+    private static String userName;
     
     //FOR Database
     Connection conn;
@@ -32,12 +35,14 @@ public class MainWindow extends javax.swing.JFrame
     Statement statement;
     DatabaseMetaData database;
     ResultSet rs;
+    SelectSeatsFrame selectSeats;
         
     DBManager data = new DBManager();
     
     //Constructors
-    public MainWindow() 
+    public MainFrame(TrainDataModel trainData) 
     {
+        this.trainData = trainData;
         initComponents();
         headerLogOutButton.setVisible(false);
         this.setTitle("NZT Train Booking Program");
@@ -56,9 +61,40 @@ public class MainWindow extends javax.swing.JFrame
     
     //Methods
     
-    public TrainDataModel getTrainData()
+    public static TrainDataModel getTrainData()
     {
-        return this.trainData;
+        return trainData;
+    }
+    
+    public ArrayList<int[]> getBookedSeats()
+    {
+        return trainData.getBookedSeatList();
+    }
+    
+    //Train Service
+    public void recordTrainService()
+    {
+        if(this.getTrainData().getChosenService() == this.getTrainData().getPolarExpressService())
+        {
+            this.getTrainData().getUserBookedServiceLine()[0] = 2;
+            
+        }
+        else if(this.getTrainData().getChosenService() == this.getTrainData().getAlleyExpressService())
+        {
+            this.getTrainData().getUserBookedServiceLine()[0] = 1;
+        }
+    }
+    
+    //Train Line
+    public void recordTrainLine()
+    {
+        this.getTrainData().getUserBookedServiceLine()[1] = trainLineList.getSelectedIndex();
+    }
+    
+    //Add to Booked Seat List
+    public void addToBookedSeatList()
+    {
+        this.getTrainData().getBookedSeatList().add(this.getTrainData().getUserBookedServiceLine());
     }
     
     /**
@@ -119,8 +155,29 @@ public class MainWindow extends javax.swing.JFrame
         trainLineBackButton = new javax.swing.JButton();
         chooseSeatPanel = new javax.swing.JPanel();
         confirmSeatBackButton = new javax.swing.JButton();
-        confirmSeatButton = new javax.swing.JButton();
-        jPanel1 = new StandardSeatGrid();
+        jLabel2 = new javax.swing.JLabel();
+        refreshChooseSeatsButton = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        confirmSeatsButton = new javax.swing.JButton();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        firstClassSeatJLabel = new javax.swing.JLabel();
+        economyClassSeatJLabel = new javax.swing.JLabel();
+        economyClassPhoto = new javax.swing.JLabel();
+        firstClassPhoto = new javax.swing.JLabel();
+        receiptPanel = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        totalPriceLabel = new javax.swing.JLabel();
+        selectedTrainLineLabel = new javax.swing.JLabel();
+        selectedTrainServiceLabel = new javax.swing.JLabel();
+        backToBookingButton = new javax.swing.JButton();
+        jLabel11 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        selectedSeatsJList = new javax.swing.JList();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -153,7 +210,7 @@ public class MainWindow extends javax.swing.JFrame
             headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(headerPanelLayout.createSequentialGroup()
                 .addComponent(mainHeaderTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 90, Short.MAX_VALUE)
                 .addComponent(headerLogOutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(46, 46, 46))
         );
@@ -186,6 +243,11 @@ public class MainWindow extends javax.swing.JFrame
                 loginButtonActionPerformed(evt);
             }
         });
+        loginButton.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                loginButtonKeyPressed(evt);
+            }
+        });
 
         createLabel.setText("Don't have an account? Create an account here:");
 
@@ -199,6 +261,12 @@ public class MainWindow extends javax.swing.JFrame
         userNameLabel.setText("Username");
 
         passwordLabel.setText("Password");
+
+        userPasswordField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                userPasswordFieldKeyPressed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
         jLabel3.setText("NZT Train Booking Company 2020. All rights reserved");
@@ -214,7 +282,6 @@ public class MainWindow extends javax.swing.JFrame
                     .addGroup(loginInnerPanelLayout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(loginInnerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(createButton)
                             .addComponent(createLabel)
                             .addComponent(loginButton, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(loginInnerPanelLayout.createSequentialGroup()
@@ -224,11 +291,12 @@ public class MainWindow extends javax.swing.JFrame
                             .addGroup(loginInnerPanelLayout.createSequentialGroup()
                                 .addComponent(passwordLabel)
                                 .addGap(18, 18, 18)
-                                .addComponent(userPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(userPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(createButton)))
                     .addGroup(loginInnerPanelLayout.createSequentialGroup()
                         .addGap(36, 36, 36)
                         .addComponent(loginLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
                 .addGroup(loginInnerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING))
@@ -328,7 +396,7 @@ public class MainWindow extends javax.swing.JFrame
                                     .addComponent(regisUserField)
                                     .addComponent(lastNameField)
                                     .addComponent(firstNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 292, Short.MAX_VALUE))
+                        .addGap(0, 343, Short.MAX_VALUE))
                     .addGroup(registerPanelLayout.createSequentialGroup()
                         .addComponent(register_createButton, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -421,7 +489,7 @@ public class MainWindow extends javax.swing.JFrame
             alleyExpressPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(alleyExpressDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, alleyExpressPanelLayout.createSequentialGroup()
-                .addContainerGap(32, Short.MAX_VALUE)
+                .addContainerGap(31, Short.MAX_VALUE)
                 .addComponent(alleyExpressPicture)
                 .addGap(29, 29, 29))
         );
@@ -471,7 +539,7 @@ public class MainWindow extends javax.swing.JFrame
             .addGroup(bookingPanelLayout.createSequentialGroup()
                 .addComponent(polarExpressPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(alleyExpressPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 348, Short.MAX_VALUE))
+                .addComponent(alleyExpressPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 308, Short.MAX_VALUE))
             .addComponent(buttonPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         bookingPanelLayout.setVerticalGroup(
@@ -480,8 +548,8 @@ public class MainWindow extends javax.swing.JFrame
                 .addComponent(bookingHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(bookingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(alleyExpressPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE)
-                    .addComponent(polarExpressPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE))
+                    .addComponent(alleyExpressPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE)
+                    .addComponent(polarExpressPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(buttonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -530,7 +598,7 @@ public class MainWindow extends javax.swing.JFrame
                             .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGroup(trainLinePanelLayout.createSequentialGroup()
                             .addComponent(trainLineBackButton, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 350, Short.MAX_VALUE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 375, Short.MAX_VALUE)
                             .addComponent(trainLineButton, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(34, 34, 34))))
             );
@@ -562,23 +630,38 @@ public class MainWindow extends javax.swing.JFrame
                 }
             });
 
-            confirmSeatButton.setText("Confirm Seats");
-            confirmSeatButton.addActionListener(new java.awt.event.ActionListener() {
+            jLabel2.setText("A new window should pop up for the seat selection. If it doesn't, click here:");
+
+            refreshChooseSeatsButton.setText("Choose Seats");
+            refreshChooseSeatsButton.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    confirmSeatButtonActionPerformed(evt);
+                    refreshChooseSeatsButtonActionPerformed(evt);
                 }
             });
 
-            javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-            jPanel1.setLayout(jPanel1Layout);
-            jPanel1Layout.setHorizontalGroup(
-                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGap(0, 400, Short.MAX_VALUE)
-            );
-            jPanel1Layout.setVerticalGroup(
-                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGap(0, 226, Short.MAX_VALUE)
-            );
+            jLabel5.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+            jLabel5.setText("Choose Seats");
+
+            confirmSeatsButton.setText("Confirm Seats");
+            confirmSeatsButton.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    confirmSeatsButtonActionPerformed(evt);
+                }
+            });
+
+            jLabel12.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+            jLabel12.setText("First Class Seat");
+
+            jLabel13.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+            jLabel13.setText("Economy Class Seat");
+
+            firstClassSeatJLabel.setText("<html> A luxurious and comfortable seat with ample leg room where the seat can transform into a bed. Includes exclusive access to our first class food and drink menu </html> ");
+
+            economyClassSeatJLabel.setText("<html>\nAffordable seats for everyone without sacrificing the experience. \nIncludes ample leg room  as well as access to our bar and eatery.\n</html>");
+
+            economyClassPhoto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/photos/economyClassPhoto.jpg"))); // NOI18N
+
+            firstClassPhoto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/photos/firstClassPhoto.jpg"))); // NOI18N
 
             javax.swing.GroupLayout chooseSeatPanelLayout = new javax.swing.GroupLayout(chooseSeatPanel);
             chooseSeatPanel.setLayout(chooseSeatPanelLayout);
@@ -586,26 +669,174 @@ public class MainWindow extends javax.swing.JFrame
                 chooseSeatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(chooseSeatPanelLayout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(confirmSeatBackButton, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 437, Short.MAX_VALUE)
-                    .addComponent(confirmSeatButton, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap())
-                .addGroup(chooseSeatPanelLayout.createSequentialGroup()
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(chooseSeatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(chooseSeatPanelLayout.createSequentialGroup()
+                            .addGroup(chooseSeatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel2)
+                                .addGroup(chooseSeatPanelLayout.createSequentialGroup()
+                                    .addGap(7, 7, 7)
+                                    .addGroup(chooseSeatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel13)
+                                        .addComponent(economyClassSeatJLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 413, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(chooseSeatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(economyClassPhoto)
+                                .addComponent(refreshChooseSeatsButton)))
+                        .addGroup(chooseSeatPanelLayout.createSequentialGroup()
+                            .addGroup(chooseSeatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(chooseSeatPanelLayout.createSequentialGroup()
+                                    .addGroup(chooseSeatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel5)
+                                        .addGroup(chooseSeatPanelLayout.createSequentialGroup()
+                                            .addGap(6, 6, 6)
+                                            .addGroup(chooseSeatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(jLabel12)
+                                                .addComponent(firstClassSeatJLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addGap(51, 51, 51)
+                                    .addComponent(firstClassPhoto, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(0, 0, Short.MAX_VALUE))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, chooseSeatPanelLayout.createSequentialGroup()
+                                    .addComponent(confirmSeatBackButton, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(confirmSeatsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addContainerGap())))
             );
             chooseSeatPanelLayout.setVerticalGroup(
                 chooseSeatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(chooseSeatPanelLayout.createSequentialGroup()
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 105, Short.MAX_VALUE)
+                    .addGroup(chooseSeatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(chooseSeatPanelLayout.createSequentialGroup()
+                            .addComponent(firstClassPhoto, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(economyClassPhoto)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(chooseSeatPanelLayout.createSequentialGroup()
+                            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel5)
+                            .addGap(18, 18, 18)
+                            .addComponent(jLabel12)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(firstClassSeatJLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(63, 63, 63)
+                            .addComponent(jLabel13)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(economyClassSeatJLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(53, 53, 53)))
                     .addGroup(chooseSeatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(confirmSeatBackButton)
-                        .addComponent(confirmSeatButton))
+                        .addComponent(jLabel2)
+                        .addComponent(refreshChooseSeatsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                    .addGroup(chooseSeatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(confirmSeatsButton)
+                        .addComponent(confirmSeatBackButton))
                     .addContainerGap())
             );
 
             cardLayoutPanel.add(chooseSeatPanel, "card5");
+
+            jLabel6.setText("Thank you for booking using our service!");
+
+            jLabel7.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+            jLabel7.setText("Total Price of Booked Seats:");
+
+            jLabel8.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+            jLabel8.setText("Train Service:");
+
+            jLabel9.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+            jLabel9.setText("Train Line:");
+
+            jLabel10.setFont(new java.awt.Font("Dialog", 1, 48)); // NOI18N
+            jLabel10.setText("RECEIPT");
+            jLabel10.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+            totalPriceLabel.setText("$0.00");
+
+            selectedTrainLineLabel.setText("x to y");
+
+            selectedTrainServiceLabel.setText("[Insert service here]");
+
+            backToBookingButton.setText("Back to Booking");
+            backToBookingButton.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    backToBookingButtonActionPerformed(evt);
+                }
+            });
+
+            jLabel11.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+            jLabel11.setText("Selected Seats:");
+
+            selectedSeatsJList.setModel(new javax.swing.AbstractListModel() {
+                String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+                public int getSize() { return strings.length; }
+                public Object getElementAt(int i) { return strings[i]; }
+            });
+            jScrollPane2.setViewportView(selectedSeatsJList);
+
+            javax.swing.GroupLayout receiptPanelLayout = new javax.swing.GroupLayout(receiptPanel);
+            receiptPanel.setLayout(receiptPanelLayout);
+            receiptPanelLayout.setHorizontalGroup(
+                receiptPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(receiptPanelLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(receiptPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(receiptPanelLayout.createSequentialGroup()
+                            .addGroup(receiptPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, receiptPanelLayout.createSequentialGroup()
+                                    .addGap(0, 0, Short.MAX_VALUE)
+                                    .addComponent(backToBookingButton, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(receiptPanelLayout.createSequentialGroup()
+                                    .addComponent(jLabel6)
+                                    .addGap(0, 0, Short.MAX_VALUE)))
+                            .addContainerGap())
+                        .addGroup(receiptPanelLayout.createSequentialGroup()
+                            .addGroup(receiptPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 476, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(receiptPanelLayout.createSequentialGroup()
+                                    .addGroup(receiptPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel8)
+                                        .addComponent(jLabel9)
+                                        .addComponent(jLabel7)
+                                        .addComponent(jLabel11))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(receiptPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(selectedTrainLineLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(selectedTrainServiceLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
+                                        .addComponent(totalPriceLabel)
+                                        .addComponent(jScrollPane2))))
+                            .addGap(81, 233, Short.MAX_VALUE))))
+            );
+            receiptPanelLayout.setVerticalGroup(
+                receiptPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(receiptPanelLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jLabel6)
+                    .addGap(43, 43, 43)
+                    .addGroup(receiptPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel8)
+                        .addComponent(selectedTrainServiceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(18, 18, 18)
+                    .addGroup(receiptPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel9)
+                        .addComponent(selectedTrainLineLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGap(18, 18, 18)
+                    .addGroup(receiptPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(receiptPanelLayout.createSequentialGroup()
+                            .addComponent(jLabel11)
+                            .addGap(0, 0, Short.MAX_VALUE))
+                        .addGroup(receiptPanelLayout.createSequentialGroup()
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(receiptPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(backToBookingButton, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(totalPriceLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel7))))
+                    .addContainerGap())
+            );
+
+            cardLayoutPanel.add(receiptPanel, "card7");
+            receiptPanel.getAccessibleContext().setAccessibleName("receiptPanel");
 
             getContentPane().add(cardLayoutPanel, java.awt.BorderLayout.CENTER);
 
@@ -619,7 +850,6 @@ public class MainWindow extends javax.swing.JFrame
     //Book for Polar Express Button
     private void bookPolarExpressActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bookPolarExpressActionPerformed
         
-        System.out.println("Book for Polar Express");
         trainData.setChosenService(trainData.getPolarExpressService());
         
         trainLineList.setModel(new javax.swing.AbstractListModel()
@@ -631,6 +861,8 @@ public class MainWindow extends javax.swing.JFrame
             public Object getElementAt(int i) { return strings[i]; }
         });
         
+        recordTrainService();
+        
         cardLayoutPanel.removeAll();
         cardLayoutPanel.add(trainLinePanel);
         cardLayoutPanel.repaint();
@@ -640,7 +872,6 @@ public class MainWindow extends javax.swing.JFrame
     //Book for Alley Express Button
     private void bookAlleyExpressActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bookAlleyExpressActionPerformed
         
-        System.out.println("Book for Alley Express");
         trainData.setChosenService(trainData.getAlleyExpressService());
         
         trainLineList.setModel(new javax.swing.AbstractListModel()
@@ -651,6 +882,8 @@ public class MainWindow extends javax.swing.JFrame
             @Override
             public Object getElementAt(int i) { return strings[i]; }
         });
+        
+        recordTrainService();
         
         cardLayoutPanel.removeAll();
         cardLayoutPanel.add(trainLinePanel);
@@ -673,6 +906,10 @@ public class MainWindow extends javax.swing.JFrame
             cardLayoutPanel.add(chooseSeatPanel);
             cardLayoutPanel.repaint();
             cardLayoutPanel.revalidate();
+            
+            recordTrainLine();
+            
+            selectSeats = new SelectSeatsFrame(trainData);
         }
         else
         {
@@ -691,16 +928,6 @@ public class MainWindow extends javax.swing.JFrame
     }//GEN-LAST:event_trainLineBackButtonActionPerformed
 
     
-    //--- 3. Choose Seats ---//
-    
-    private void confirmSeatButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmSeatButtonActionPerformed
-        
-        cardLayoutPanel.removeAll();
-        cardLayoutPanel.add(bookingPanel);
-        cardLayoutPanel.repaint();
-        cardLayoutPanel.revalidate();
-    }//GEN-LAST:event_confirmSeatButtonActionPerformed
-
     //Back Button
     private void confirmSeatBackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmSeatBackButtonActionPerformed
         
@@ -733,7 +960,7 @@ public class MainWindow extends javax.swing.JFrame
     //LOGIN FROM LOGIN PANEL
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
         // TODO add your handling code here:
-        String userName = userInputField.getText();
+        userName = userInputField.getText();
         String userpassword = userPasswordField.getText();
         
         userInputField.setText(null);
@@ -872,10 +1099,122 @@ public class MainWindow extends javax.swing.JFrame
             System.err.println("Error occured when closing connection: " + e.getMessage());
         }
     }//GEN-LAST:event_formWindowClosing
-    
-    
-    
 
+    private void refreshChooseSeatsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshChooseSeatsButtonActionPerformed
+        
+        selectSeats.closeFrame();
+        
+        selectSeats = new SelectSeatsFrame(trainData);
+        
+    }//GEN-LAST:event_refreshChooseSeatsButtonActionPerformed
+
+    //Confirm Seat Button
+    private void confirmSeatsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmSeatsButtonActionPerformed
+        
+        trainData = selectSeats.confirmSeats(trainData);
+        
+        if(trainData.getUserCurrentBookedSeatList().isEmpty())
+        {
+            infoMessage("It seems that you have not selected a seat. Please select a seat.", "Error: No seat selected");
+        }
+        else
+        {
+            selectSeats.closeFrame();
+            selectSeats = null;
+            headerLogOutButton.setVisible(false);
+
+            selectedTrainServiceLabel.setText(trainData.getChosenService().toString());
+            selectedTrainLineLabel.setText(trainData.getChosenLine().toString());
+            totalPriceLabel.setText("$" + trainData.getTotalPrice());
+            int numberSeats = trainData.getUserCurrentBookedSeatList().size();
+            String chosenService = trainData.getChosenService().toString();
+            String chosenLine = trainData.getChosenLine().toString();
+
+            selectedSeatsJList.setModel(new javax.swing.AbstractListModel() 
+            {
+                String[] strings = trainData.getSelectedSeatList();
+                @Override
+                public int getSize() { return strings.length; }
+                @Override
+                public Object getElementAt(int i) { return strings[i]; }
+            });
+            
+            data.insertBookingTable(userName, chosenService, chosenLine, numberSeats, trainData.getTotalPrice());
+
+            trainData.setTotalPrice(0);
+
+            cardLayoutPanel.removeAll();
+            cardLayoutPanel.add(receiptPanel);
+            cardLayoutPanel.repaint();
+            cardLayoutPanel.revalidate();
+        }
+        
+        
+    }//GEN-LAST:event_confirmSeatsButtonActionPerformed
+
+    private void backToBookingButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backToBookingButtonActionPerformed
+        
+        headerLogOutButton.setVisible(true);
+        
+        cardLayoutPanel.removeAll();
+        cardLayoutPanel.add(bookingPanel);
+        cardLayoutPanel.repaint();
+        cardLayoutPanel.revalidate();
+    }//GEN-LAST:event_backToBookingButtonActionPerformed
+
+    private void loginButtonKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_loginButtonKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_loginButtonKeyPressed
+
+    //IF USER PRESSES ENTER KEY
+    private void userPasswordFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_userPasswordFieldKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER)
+        {
+            userName = userInputField.getText();
+            String userpassword = userPasswordField.getText();
+        
+            userInputField.setText(null);
+            userPasswordField.setText(null);
+
+            try
+            {
+                conn = DriverManager.getConnection(url, username, password);
+                statement = conn.createStatement();
+                String selectQuery = "select * from CUSTOMER where USERNAME = '" + userName + "' AND PASSWORD = '" + userpassword + "'";
+                rs = statement.executeQuery(selectQuery);
+
+                if(rs.next()){
+
+                    infoMessage("Login sucessful", "Welcome");
+
+                    cardLayoutPanel.removeAll();
+                    cardLayoutPanel.add(bookingPanel);
+                    cardLayoutPanel.repaint();
+                    cardLayoutPanel.revalidate();
+
+                    headerLogOutButton.setVisible(true);
+                }
+                else
+                {
+                    infoMessage("Don't have an account? Please create one.", "ERROR");
+
+                    cardLayoutPanel.removeAll();
+                    cardLayoutPanel.add(registerPanel);
+                    cardLayoutPanel.repaint();
+                    cardLayoutPanel.revalidate();
+                }
+            }
+            catch (SQLException er)
+            {
+                System.err.println("Error: " + er.getMessage());
+            }
+
+        }
+    }//GEN-LAST:event_userPasswordFieldKeyPressed
+    
+    
+    
     
     /**
      * @param args the command line arguments
@@ -895,14 +1234,15 @@ public class MainWindow extends javax.swing.JFrame
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
@@ -910,7 +1250,7 @@ public class MainWindow extends javax.swing.JFrame
         {
             public void run() 
             {
-                new MainWindow().setVisible(true);
+                new MainFrame(getTrainData()).setVisible(true);
             }
         });
     }
@@ -919,6 +1259,7 @@ public class MainWindow extends javax.swing.JFrame
     private javax.swing.JLabel alleyExpressDescription;
     private javax.swing.JPanel alleyExpressPanel;
     private javax.swing.JLabel alleyExpressPicture;
+    private javax.swing.JButton backToBookingButton;
     private javax.swing.JButton bookAlleyExpress;
     private javax.swing.JButton bookPolarExpress;
     private javax.swing.JLabel bookingHeader;
@@ -927,20 +1268,34 @@ public class MainWindow extends javax.swing.JFrame
     private javax.swing.JPanel cardLayoutPanel;
     private javax.swing.JPanel chooseSeatPanel;
     private javax.swing.JButton confirmSeatBackButton;
-    private javax.swing.JButton confirmSeatButton;
+    private javax.swing.JButton confirmSeatsButton;
     private javax.swing.JButton createButton;
     private javax.swing.JLabel createLabel;
     private javax.swing.JLabel descriptionLabel;
     private javax.swing.JLabel descriptionLabel2;
+    private javax.swing.JLabel economyClassPhoto;
+    private javax.swing.JLabel economyClassSeatJLabel;
     private javax.swing.JLabel fNameLabel;
+    private javax.swing.JLabel firstClassPhoto;
+    private javax.swing.JLabel firstClassSeatJLabel;
     private javax.swing.JTextField firstNameField;
     private javax.swing.JButton headerLogOutButton;
     private javax.swing.JPanel headerPanel;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lNameLabel;
     private javax.swing.JTextField lastNameField;
     private javax.swing.JButton loginButton;
@@ -953,12 +1308,18 @@ public class MainWindow extends javax.swing.JFrame
     private javax.swing.JPanel polarExpressPanel;
     private javax.swing.JLabel polarExpressPicture;
     private javax.swing.JLabel rPasswordLabel;
+    private javax.swing.JPanel receiptPanel;
+    private javax.swing.JButton refreshChooseSeatsButton;
     private javax.swing.JPasswordField regisPasswordField;
     private javax.swing.JTextField regisUserField;
     private javax.swing.JLabel registerLabel;
     private javax.swing.JPanel registerPanel;
     private javax.swing.JButton register_backButton;
     private javax.swing.JButton register_createButton;
+    private javax.swing.JList selectedSeatsJList;
+    private javax.swing.JLabel selectedTrainLineLabel;
+    private javax.swing.JLabel selectedTrainServiceLabel;
+    private javax.swing.JLabel totalPriceLabel;
     private javax.swing.JButton trainLineBackButton;
     private javax.swing.JButton trainLineButton;
     private javax.swing.JList trainLineList;
