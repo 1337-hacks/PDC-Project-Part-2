@@ -159,7 +159,6 @@ public class TrainBookingProgram
         MainFrame window = new MainFrame(trainData);
     
         database.createTable();
-        
         database.view("customer");
         database.view("bookings");
         window.setVisible(true);

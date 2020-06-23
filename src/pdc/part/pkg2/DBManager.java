@@ -70,9 +70,11 @@ public class DBManager
             String tableCreateString =  "CREATE TABLE " + bookings_tableName + 
                                         "(" +
                                         "BOOKING_ID INT NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY(Start with 1, Increment by 1) , " +
-                                        "FULL_NAME VARCHAR(50), " + 
-                                        "SEAT VARCHAR(50), " +
-                                        "TOTAL_PRICE INT" +
+                                        "USERNAME VARCHAR(100)," + 
+                                        "CHOSEN_SERVICE VARCHAR(100)," +
+                                        "CHOSEN_LINE VARCHAR(100)," +
+                                        "SEAT VARCHAR(100), " +
+                                        "TOTAL_PRICE VARCHAR(100)" +
                                         ")";
 
             data = conn.getMetaData();
@@ -171,14 +173,17 @@ public class DBManager
     }
     
     //FUNCTION NEEDS WORK
-    public void insertBookingTable( String fullName, String seats, int totalPrice)
+    public void insertBookingTable( String userName,String chosenService, String chosenLine, int seats, double totalPrice)
     {
         try
         {
             conn = DriverManager.getConnection(url, username, password);
             statement = conn.createStatement();
-            statement.executeUpdate("insert into BOOKINGS (FULL_NAME, SEAT, TOTAL_PRICE) values"
-                               +  "('" + fullName + "' , '" + seats + "' , '" + totalPrice + "')");
+            String price = Double.toString(totalPrice);
+            String numberSeats = Integer.toString(seats);
+            statement.executeUpdate("insert into BOOKINGS (USERNAME, CHOSEN_SERVICE, CHOSEN_LINE, SEAT, TOTAL_PRICE) values"
+                               +  "('" + userName + "' , '"+ chosenService +"' , '"
+                               + chosenLine +"', '" + seats + "' , '" + price + "')");
             
             System.out.println("Values inserted to Bookings Table"); 
 

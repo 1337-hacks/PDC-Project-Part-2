@@ -22,7 +22,7 @@ public class TrainDataModel
     private static int[] result;
     private ArrayList<int[]> userCurrentBookedSeatList = new ArrayList<int[]>(); // stores user's current booked seats
     private ArrayList<int[]> bookedSeatList = new ArrayList<int[]>();            // the official booked seat list. Stores all booked seat information here.
-    private int totalPrice;
+    private double totalPrice;
     
     private String alleyExpressTrainLines[] = {    //Alley Express Train Lines
                                                     alleyExpressService.getTrainLine()[0].toString(),
@@ -88,7 +88,7 @@ public class TrainDataModel
     
     //Getters and Setters
     
-    public int getTotalPrice()
+    public double getTotalPrice()
     {
         return this.totalPrice;
     }

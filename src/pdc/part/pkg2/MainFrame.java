@@ -5,6 +5,7 @@
  */
 package pdc.part.pkg2;
 
+import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
@@ -23,6 +24,7 @@ public class MainFrame extends javax.swing.JFrame
 {
     //Variables
     private static TrainDataModel trainData;
+    private static String userName;
     
     //FOR Database
     Connection conn;
@@ -237,6 +239,11 @@ public class MainFrame extends javax.swing.JFrame
                 loginButtonActionPerformed(evt);
             }
         });
+        loginButton.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                loginButtonKeyPressed(evt);
+            }
+        });
 
         createLabel.setText("Don't have an account? Create an account here:");
 
@@ -250,6 +257,12 @@ public class MainFrame extends javax.swing.JFrame
         userNameLabel.setText("Username");
 
         passwordLabel.setText("Password");
+
+        userPasswordField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                userPasswordFieldKeyPressed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
         jLabel3.setText("NZT Train Booking Company 2020. All rights reserved");
@@ -874,7 +887,7 @@ public class MainFrame extends javax.swing.JFrame
     //LOGIN FROM LOGIN PANEL
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
         // TODO add your handling code here:
-        String userName = userInputField.getText();
+        userName = userInputField.getText();
         String userpassword = userPasswordField.getText();
         
         userInputField.setText(null);
@@ -1030,9 +1043,12 @@ public class MainFrame extends javax.swing.JFrame
         
         selectedTrainServiceLabel.setText(trainData.getChosenService().toString());
         selectedTrainLineLabel.setText(trainData.getChosenLine().toString());
-        totalPriceLabel.setText("$" + trainData.getTotalPrice() + ".00");
+        totalPriceLabel.setText("$" + trainData.getTotalPrice());
+        int numberSeats = trainData.getUserCurrentBookedSeatList().size();
+        String chosenService = trainData.getChosenService().toString();
+        String chosenLine = trainData.getChosenLine().toString();
         
-        data.insertBookingTable("bean", "hello", trainData.getTotalPrice());
+        data.insertBookingTable(userName, chosenService, chosenLine, numberSeats, trainData.getTotalPrice());
         
         trainData.setTotalPrice(0);
         
@@ -1051,6 +1067,57 @@ public class MainFrame extends javax.swing.JFrame
         cardLayoutPanel.repaint();
         cardLayoutPanel.revalidate();
     }//GEN-LAST:event_backToBookingButtonActionPerformed
+
+    private void loginButtonKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_loginButtonKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_loginButtonKeyPressed
+
+    //IF USER PRESSES ENTER KEY
+    private void userPasswordFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_userPasswordFieldKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER)
+        {
+            userName = userInputField.getText();
+            String userpassword = userPasswordField.getText();
+        
+            userInputField.setText(null);
+            userPasswordField.setText(null);
+
+            try
+            {
+                conn = DriverManager.getConnection(url, username, password);
+                statement = conn.createStatement();
+                String selectQuery = "select * from CUSTOMER where USERNAME = '" + userName + "' AND PASSWORD = '" + userpassword + "'";
+                rs = statement.executeQuery(selectQuery);
+
+                if(rs.next()){
+
+                    infoMessage("Login sucessful", "Welcome");
+
+                    cardLayoutPanel.removeAll();
+                    cardLayoutPanel.add(bookingPanel);
+                    cardLayoutPanel.repaint();
+                    cardLayoutPanel.revalidate();
+
+                    headerLogOutButton.setVisible(true);
+                }
+                else
+                {
+                    infoMessage("Don't have an account? Please create one.", "ERROR");
+
+                    cardLayoutPanel.removeAll();
+                    cardLayoutPanel.add(registerPanel);
+                    cardLayoutPanel.repaint();
+                    cardLayoutPanel.revalidate();
+                }
+            }
+            catch (SQLException er)
+            {
+                System.err.println("Error: " + er.getMessage());
+            }
+
+        }
+    }//GEN-LAST:event_userPasswordFieldKeyPressed
     
     
     
