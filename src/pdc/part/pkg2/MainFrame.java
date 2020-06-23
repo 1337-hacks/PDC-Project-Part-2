@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
 import java.util.ArrayList;
+import javax.swing.*;
 
 
 /**
@@ -34,7 +35,7 @@ public class MainFrame extends javax.swing.JFrame
     Statement statement;
     DatabaseMetaData database;
     ResultSet rs;
-    SelectSeatsFrame selectSeats ;
+    SelectSeatsFrame selectSeats;
         
     DBManager data = new DBManager();
     
@@ -88,12 +89,6 @@ public class MainFrame extends javax.swing.JFrame
     public void recordTrainLine()
     {
         this.getTrainData().getUserBookedServiceLine()[1] = trainLineList.getSelectedIndex();
-    }
-    
-    //Train Seat
-    public void recordSeat()
-    {
-        
     }
     
     //Add to Booked Seat List
@@ -164,6 +159,12 @@ public class MainFrame extends javax.swing.JFrame
         refreshChooseSeatsButton = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         confirmSeatsButton = new javax.swing.JButton();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        firstClassSeatJLabel = new javax.swing.JLabel();
+        economyClassSeatJLabel = new javax.swing.JLabel();
+        economyClassPhoto = new javax.swing.JLabel();
+        firstClassPhoto = new javax.swing.JLabel();
         receiptPanel = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -174,6 +175,9 @@ public class MainFrame extends javax.swing.JFrame
         selectedTrainLineLabel = new javax.swing.JLabel();
         selectedTrainServiceLabel = new javax.swing.JLabel();
         backToBookingButton = new javax.swing.JButton();
+        jLabel11 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        selectedSeatsJList = new javax.swing.JList();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -485,7 +489,7 @@ public class MainFrame extends javax.swing.JFrame
             alleyExpressPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(alleyExpressDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, alleyExpressPanelLayout.createSequentialGroup()
-                .addContainerGap(96, Short.MAX_VALUE)
+                .addContainerGap(31, Short.MAX_VALUE)
                 .addComponent(alleyExpressPicture)
                 .addGap(29, 29, 29))
         );
@@ -535,7 +539,7 @@ public class MainFrame extends javax.swing.JFrame
             .addGroup(bookingPanelLayout.createSequentialGroup()
                 .addComponent(polarExpressPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(alleyExpressPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 373, Short.MAX_VALUE))
+                .addComponent(alleyExpressPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 308, Short.MAX_VALUE))
             .addComponent(buttonPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         bookingPanelLayout.setVerticalGroup(
@@ -544,8 +548,8 @@ public class MainFrame extends javax.swing.JFrame
                 .addComponent(bookingHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(bookingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(alleyExpressPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
-                    .addComponent(polarExpressPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE))
+                    .addComponent(alleyExpressPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE)
+                    .addComponent(polarExpressPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(buttonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -626,7 +630,7 @@ public class MainFrame extends javax.swing.JFrame
                 }
             });
 
-            jLabel2.setText("A new window should pop up. If it doesn't, click here:");
+            jLabel2.setText("A new window should pop up for the seat selection. If it doesn't, click here:");
 
             refreshChooseSeatsButton.setText("Choose Seats");
             refreshChooseSeatsButton.addActionListener(new java.awt.event.ActionListener() {
@@ -645,40 +649,86 @@ public class MainFrame extends javax.swing.JFrame
                 }
             });
 
+            jLabel12.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+            jLabel12.setText("First Class Seat");
+
+            jLabel13.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+            jLabel13.setText("Economy Class Seat");
+
+            firstClassSeatJLabel.setText("<html> A luxurious and comfortable seat with ample leg room where the seat can transform into a bed. Includes exclusive access to our first class food and drink menu </html> ");
+
+            economyClassSeatJLabel.setText("<html>\nAffordable seats for everyone without sacrificing the experience. \nIncludes ample leg room  as well as access to our bar and eatery.\n</html>");
+
+            economyClassPhoto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/photos/economyClassPhoto.jpg"))); // NOI18N
+
+            firstClassPhoto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/photos/firstClassPhoto.jpg"))); // NOI18N
+
             javax.swing.GroupLayout chooseSeatPanelLayout = new javax.swing.GroupLayout(chooseSeatPanel);
             chooseSeatPanel.setLayout(chooseSeatPanelLayout);
             chooseSeatPanelLayout.setHorizontalGroup(
                 chooseSeatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(chooseSeatPanelLayout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(confirmSeatBackButton, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 166, Short.MAX_VALUE)
                     .addGroup(chooseSeatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, chooseSeatPanelLayout.createSequentialGroup()
-                            .addComponent(jLabel5)
-                            .addGap(305, 305, 305))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, chooseSeatPanelLayout.createSequentialGroup()
-                            .addComponent(confirmSeatsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(chooseSeatPanelLayout.createSequentialGroup()
+                            .addGroup(chooseSeatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel2)
+                                .addGroup(chooseSeatPanelLayout.createSequentialGroup()
+                                    .addGap(7, 7, 7)
+                                    .addGroup(chooseSeatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel13)
+                                        .addComponent(economyClassSeatJLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 413, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(chooseSeatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(economyClassPhoto)
+                                .addComponent(refreshChooseSeatsButton)))
+                        .addGroup(chooseSeatPanelLayout.createSequentialGroup()
+                            .addGroup(chooseSeatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(chooseSeatPanelLayout.createSequentialGroup()
+                                    .addGroup(chooseSeatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel5)
+                                        .addGroup(chooseSeatPanelLayout.createSequentialGroup()
+                                            .addGap(6, 6, 6)
+                                            .addGroup(chooseSeatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(jLabel12)
+                                                .addComponent(firstClassSeatJLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addGap(51, 51, 51)
+                                    .addComponent(firstClassPhoto, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(0, 0, Short.MAX_VALUE))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, chooseSeatPanelLayout.createSequentialGroup()
+                                    .addComponent(confirmSeatBackButton, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(confirmSeatsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addContainerGap())))
-                .addGroup(chooseSeatPanelLayout.createSequentialGroup()
-                    .addComponent(jLabel2)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(refreshChooseSeatsButton)
-                    .addGap(0, 0, Short.MAX_VALUE))
             );
             chooseSeatPanelLayout.setVerticalGroup(
                 chooseSeatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(chooseSeatPanelLayout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jLabel5)
-                    .addGap(18, 18, 18)
+                    .addGroup(chooseSeatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(chooseSeatPanelLayout.createSequentialGroup()
+                            .addComponent(firstClassPhoto, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(economyClassPhoto)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(chooseSeatPanelLayout.createSequentialGroup()
+                            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel5)
+                            .addGap(18, 18, 18)
+                            .addComponent(jLabel12)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(firstClassSeatJLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(63, 63, 63)
+                            .addComponent(jLabel13)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(economyClassSeatJLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(53, 53, 53)))
                     .addGroup(chooseSeatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel2)
-                        .addComponent(refreshChooseSeatsButton))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 251, Short.MAX_VALUE)
+                        .addComponent(refreshChooseSeatsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                     .addGroup(chooseSeatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(confirmSeatBackButton)
-                        .addComponent(confirmSeatsButton))
+                        .addComponent(confirmSeatsButton)
+                        .addComponent(confirmSeatBackButton))
                     .addContainerGap())
             );
 
@@ -712,6 +762,16 @@ public class MainFrame extends javax.swing.JFrame
                 }
             });
 
+            jLabel11.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+            jLabel11.setText("Selected Seats:");
+
+            selectedSeatsJList.setModel(new javax.swing.AbstractListModel() {
+                String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+                public int getSize() { return strings.length; }
+                public Object getElementAt(int i) { return strings[i]; }
+            });
+            jScrollPane2.setViewportView(selectedSeatsJList);
+
             javax.swing.GroupLayout receiptPanelLayout = new javax.swing.GroupLayout(receiptPanel);
             receiptPanel.setLayout(receiptPanelLayout);
             receiptPanelLayout.setHorizontalGroup(
@@ -719,24 +779,31 @@ public class MainFrame extends javax.swing.JFrame
                 .addGroup(receiptPanelLayout.createSequentialGroup()
                     .addContainerGap()
                     .addGroup(receiptPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel6)
-                        .addGroup(receiptPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 476, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(receiptPanelLayout.createSequentialGroup()
-                                .addGroup(receiptPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel8)
-                                    .addComponent(jLabel9)
-                                    .addComponent(jLabel7))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(receiptPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(selectedTrainLineLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(selectedTrainServiceLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(totalPriceLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                    .addContainerGap(233, Short.MAX_VALUE))
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, receiptPanelLayout.createSequentialGroup()
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(backToBookingButton, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap())
+                        .addGroup(receiptPanelLayout.createSequentialGroup()
+                            .addGroup(receiptPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, receiptPanelLayout.createSequentialGroup()
+                                    .addGap(0, 0, Short.MAX_VALUE)
+                                    .addComponent(backToBookingButton, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(receiptPanelLayout.createSequentialGroup()
+                                    .addComponent(jLabel6)
+                                    .addGap(0, 0, Short.MAX_VALUE)))
+                            .addContainerGap())
+                        .addGroup(receiptPanelLayout.createSequentialGroup()
+                            .addGroup(receiptPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 476, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(receiptPanelLayout.createSequentialGroup()
+                                    .addGroup(receiptPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel8)
+                                        .addComponent(jLabel9)
+                                        .addComponent(jLabel7)
+                                        .addComponent(jLabel11))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(receiptPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(selectedTrainLineLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(selectedTrainServiceLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
+                                        .addComponent(totalPriceLabel)
+                                        .addComponent(jScrollPane2))))
+                            .addGap(81, 233, Short.MAX_VALUE))))
             );
             receiptPanelLayout.setVerticalGroup(
                 receiptPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -754,11 +821,17 @@ public class MainFrame extends javax.swing.JFrame
                         .addComponent(jLabel9)
                         .addComponent(selectedTrainLineLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGap(18, 18, 18)
-                    .addGroup(receiptPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel7)
-                        .addComponent(totalPriceLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGap(83, 83, 83)
-                    .addComponent(backToBookingButton, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(receiptPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(receiptPanelLayout.createSequentialGroup()
+                            .addComponent(jLabel11)
+                            .addGap(0, 0, Short.MAX_VALUE))
+                        .addGroup(receiptPanelLayout.createSequentialGroup()
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(receiptPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(backToBookingButton, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(totalPriceLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel7))))
                     .addContainerGap())
             );
 
@@ -1029,6 +1102,8 @@ public class MainFrame extends javax.swing.JFrame
 
     private void refreshChooseSeatsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshChooseSeatsButtonActionPerformed
         
+        selectSeats.closeFrame();
+        
         selectSeats = new SelectSeatsFrame(trainData);
         
     }//GEN-LAST:event_refreshChooseSeatsButtonActionPerformed
@@ -1038,24 +1113,43 @@ public class MainFrame extends javax.swing.JFrame
         
         trainData = selectSeats.confirmSeats(trainData);
         
-        selectSeats.closeFrame();
-        headerLogOutButton.setVisible(false);
+        if(trainData.getUserCurrentBookedSeatList().isEmpty())
+        {
+            infoMessage("It seems that you have not selected a seat. Please select a seat.", "Error: No seat selected");
+        }
+        else
+        {
+            selectSeats.closeFrame();
+            selectSeats = null;
+            headerLogOutButton.setVisible(false);
+
+            selectedTrainServiceLabel.setText(trainData.getChosenService().toString());
+            selectedTrainLineLabel.setText(trainData.getChosenLine().toString());
+            totalPriceLabel.setText("$" + trainData.getTotalPrice());
+            int numberSeats = trainData.getUserCurrentBookedSeatList().size();
+            String chosenService = trainData.getChosenService().toString();
+            String chosenLine = trainData.getChosenLine().toString();
+
+            selectedSeatsJList.setModel(new javax.swing.AbstractListModel() 
+            {
+                String[] strings = trainData.getSelectedSeatList();
+                @Override
+                public int getSize() { return strings.length; }
+                @Override
+                public Object getElementAt(int i) { return strings[i]; }
+            });
+            
+            data.insertBookingTable(userName, chosenService, chosenLine, numberSeats, trainData.getTotalPrice());
+
+            trainData.setTotalPrice(0);
+
+            cardLayoutPanel.removeAll();
+            cardLayoutPanel.add(receiptPanel);
+            cardLayoutPanel.repaint();
+            cardLayoutPanel.revalidate();
+        }
         
-        selectedTrainServiceLabel.setText(trainData.getChosenService().toString());
-        selectedTrainLineLabel.setText(trainData.getChosenLine().toString());
-        totalPriceLabel.setText("$" + trainData.getTotalPrice());
-        int numberSeats = trainData.getUserCurrentBookedSeatList().size();
-        String chosenService = trainData.getChosenService().toString();
-        String chosenLine = trainData.getChosenLine().toString();
         
-        data.insertBookingTable(userName, chosenService, chosenLine, numberSeats, trainData.getTotalPrice());
-        
-        trainData.setTotalPrice(0);
-        
-        cardLayoutPanel.removeAll();
-        cardLayoutPanel.add(receiptPanel);
-        cardLayoutPanel.repaint();
-        cardLayoutPanel.revalidate();
     }//GEN-LAST:event_confirmSeatsButtonActionPerformed
 
     private void backToBookingButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backToBookingButtonActionPerformed
@@ -1179,12 +1273,19 @@ public class MainFrame extends javax.swing.JFrame
     private javax.swing.JLabel createLabel;
     private javax.swing.JLabel descriptionLabel;
     private javax.swing.JLabel descriptionLabel2;
+    private javax.swing.JLabel economyClassPhoto;
+    private javax.swing.JLabel economyClassSeatJLabel;
     private javax.swing.JLabel fNameLabel;
+    private javax.swing.JLabel firstClassPhoto;
+    private javax.swing.JLabel firstClassSeatJLabel;
     private javax.swing.JTextField firstNameField;
     private javax.swing.JButton headerLogOutButton;
     private javax.swing.JPanel headerPanel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -1194,6 +1295,7 @@ public class MainFrame extends javax.swing.JFrame
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lNameLabel;
     private javax.swing.JTextField lastNameField;
     private javax.swing.JButton loginButton;
@@ -1214,6 +1316,7 @@ public class MainFrame extends javax.swing.JFrame
     private javax.swing.JPanel registerPanel;
     private javax.swing.JButton register_backButton;
     private javax.swing.JButton register_createButton;
+    private javax.swing.JList selectedSeatsJList;
     private javax.swing.JLabel selectedTrainLineLabel;
     private javax.swing.JLabel selectedTrainServiceLabel;
     private javax.swing.JLabel totalPriceLabel;
