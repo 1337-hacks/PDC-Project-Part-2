@@ -1,16 +1,18 @@
 /*
- * Description: Frame used for displaying and booking the user's desired seats.
+ * --- DESCRIPTION ---
+ * 
+ * Frame used for displaying and booking the user's desired seats.
+ * This also saves the user's desired seats into the TrainDataModel.
  */
 package pdc.part.pkg2;
 
 import javax.swing.*;
 import java.util.ArrayList;
 import java.awt.*;
-import java.awt.event.*;
 
 /**
  *
- * @author Elijah N and John S
+ * @author Elijah 18023249 and John 18017056
  */
 public class SelectSeatsFrame
 {
@@ -36,6 +38,7 @@ public class SelectSeatsFrame
         
         initComponents(this.trainDataHolder.getChosenLine());
         
+        this.selectSeatsFrame.setLocationRelativeTo(null);
         this.selectSeatsFrame.setTitle(this.windowTitle);
         this.selectSeatsFrame.setSize(650, 500);
         this.selectSeatsFrame.setVisible(true);

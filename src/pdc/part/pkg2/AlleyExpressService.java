@@ -3,7 +3,7 @@
  * 
  * A subclass of TrainService. AlleyExpressService includes 
  * an array of Strings (operator name). Additionally, it includes 
- * an array of TrainLine (alleyTrainLine) which contains 4 destination. 
+ * an array of TrainLine (alleyTrainLine) which contains 4 destinations. 
  * Each operator is assigned to their respective trainline.
  */
 

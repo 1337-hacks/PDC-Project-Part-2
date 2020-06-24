@@ -1,7 +1,7 @@
 /*
  * --- DESCRIPTION ---
  *
- * This class describes Seat. The Seat contains default constructor 
+ * This class describes Seat, and extends the JToggleButton class. The Seat contains default constructor 
  * and it has a parameterized constructor. It has variables that describes 
  * a seat such as price (seatPrice), features(seatFeatures), seat (seatName) 
  * and if a seat is booked (seatTaken). All necessary, get and set methods
@@ -110,10 +110,11 @@ public class Seat extends JToggleButton
     {
         return seatTaken;
     }
-
-    public void setSeatTaken(boolean seatTaken) 
+    
+    public void cancelBooking()
     {
-        this.seatTaken = seatTaken;
+        this.seatTaken = false;
+        this.setEnabled(true);
     }
     
     //Used to book seat and disable this seat (button) from being booked

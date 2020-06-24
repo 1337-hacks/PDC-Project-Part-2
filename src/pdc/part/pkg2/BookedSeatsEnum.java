@@ -2,10 +2,11 @@
  * --- DESCRIPTION ---
  *
  * An Enum class. This is used in the 
- * main file (TrainBookingApp) in the setBookedSeats method. The
+ * main file (TrainBookingProgram) in the setBookedSeats method. The
  * enums are used to identify the seats which have been previously
  * booked before.
  */
+
 package pdc.part.pkg2;
 
 /**

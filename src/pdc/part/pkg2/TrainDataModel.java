@@ -1,6 +1,9 @@
 /*
- * Description: Model Class, refers to the MVC Pattern.
- * Stores all the necessary data for the train model.
+ * --- DESCRIPTION ---
+ * 
+ * This class stores all the necessary data for the train model.
+ * Includes the train service, train lines, and arrays for storing the user's
+ * selected seats as well as the booked seats booked before.
  */
 package pdc.part.pkg2;
 
@@ -8,8 +11,9 @@ import java.util.ArrayList;
 
 /**
  *
- * @author elija
+ * @author Elijah 18023249 and John 18017056
  */
+
 public class TrainDataModel 
 {
     //Variables

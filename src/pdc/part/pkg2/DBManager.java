@@ -1,15 +1,18 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * --- DESCRIPTION ---
+ * 
+ * This class is used for managing the database, where it creates 
+ * the necessary tables and adds values to the database tables.
  */
+
 package pdc.part.pkg2;
 
 import java.sql.*;
+import javax.swing.JOptionPane;
 
 /**
  *
- * @author elija
+ * @author Elijah 18023249 and John 18017056
  */
 public class DBManager 
 {
@@ -22,6 +25,7 @@ public class DBManager
     private Statement statement;
     DatabaseMetaData data;
     private ResultSet rs;
+    private boolean error;
     
     //Constructor
     
@@ -37,11 +41,14 @@ public class DBManager
         try
         {
             conn = DriverManager.getConnection(getUrl(), getUsername(), getPassword());
+            
             System.out.println("Connected!");
         }
         catch (SQLException e)
         {
+            infoMessage("Error connecting to the database!", "Error");
             System.err.println("Error connecting to database!" + e.getMessage());
+            this.error = true;
         }
     }
     
@@ -56,6 +63,7 @@ public class DBManager
         }
         catch (SQLException e)
         {
+            infoMessage("Error closing the database!", "Error");
             System.err.println("Error closing the database!" + e.getMessage());
         }
     }
@@ -110,7 +118,15 @@ public class DBManager
         }
         catch (SQLException e)
         {
+            infoMessage("Error with the database.", "Error");
             System.err.println("Error: " + e.getMessage());
+            this.error = true;
+        }
+        catch (NullPointerException f)
+        {
+            infoMessage("Error with the database.", "Error");
+            System.err.println("Error: " + f.getMessage());
+            this.error = true;
         }
     }
     
@@ -146,7 +162,9 @@ public class DBManager
         } 
          catch (SQLException ex)
         {
+            infoMessage("Error with the database!", "Error");
             System.err.println(ex.getMessage());
+            this.error = true;
         }
         
     }
@@ -162,17 +180,19 @@ public class DBManager
                                +  "('" + firstName + "' , '" + lastName + "' , '" + userName + "', '" + userPassword + "')");
             
             System.out.println("Values inserted to Customer Table"); 
-
+            
             conn = DriverManager.getConnection("jdbc:derby:TrainBookingDB; shutdown=true");
         } 
         catch (SQLException ex)
         {
+            infoMessage("Error with the database!", "Error");
             System.err.println(ex.getMessage());
+            this.error = true;
         }
       
     }
     
-    //FUNCTION NEEDS WORK
+    //Insert details into booking table
     public void insertBookingTable( String userName,String chosenService, String chosenLine, int seats, double totalPrice)
     {
         try
@@ -192,10 +212,15 @@ public class DBManager
         catch (SQLException ex)
         {
             System.err.println(ex.getMessage());
+            this.error = true;
         }
       
     }
     
+    public void infoMessage(String message, String title)
+    {
+        JOptionPane.showMessageDialog(null, message, title, JOptionPane.INFORMATION_MESSAGE);
+    }
 
     //Getters and Setters
     
@@ -245,5 +270,13 @@ public class DBManager
 
     public void setRs(ResultSet rs) {
         this.rs = rs;
+    }
+
+    public boolean isError() {
+        return error;
+    }
+
+    public void setError(boolean error) {
+        this.error = error;
     }
 }

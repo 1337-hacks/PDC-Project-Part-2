@@ -440,7 +440,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="polarExpressPanel" min="-2" pref="336" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="alleyExpressPanel" pref="308" max="32767" attributes="0"/>
+                      <Component id="alleyExpressPanel" pref="373" max="32767" attributes="0"/>
                   </Group>
                   <Component id="buttonPanel" alignment="0" max="32767" attributes="0"/>
               </Group>
@@ -811,7 +811,7 @@
                           <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="refreshChooseSeatsButton" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="10" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="confirmSeatsButton" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="confirmSeatBackButton" alignment="3" min="-2" max="-2" attributes="0"/>

@@ -1,6 +1,10 @@
 /*
- * Description: Main program file. Also the Controller file, referring to the MVC Pattern.
- * Includes the main method and functions that work on TrainDataModel (model class).
+ * --- DESCRIPTION ---
+ * 
+ * The main program file for the project. This sets up the MainFrame class variable
+ * as well as the TrainDataModel class variable.
+ * This class also saves the user's selected seats in the bookedSeats.txt file
+ * and reads it.
  */
 package pdc.part.pkg2;
 
@@ -9,15 +13,9 @@ import java.util.ArrayList;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-// 1 = Alley, 2 = Polar
-// 0,1,2,3 = TrainLine
-// 1 = First, 2 = Economy
-// x coord
-// y coord
-
 /**
  *
- * @author Elijah and Sanggy
+ * @author Elijah 18023249 and John 18017056
  */
 public class TrainBookingProgram 
 {   
@@ -25,20 +23,6 @@ public class TrainBookingProgram
     protected static BufferedWriter writer;
     protected static String line = "";
     
-    public static void trainService(MainFrame window)
-    {
-        window.getTrainData().getBookedSeatList().add(window.getTrainData().getUserBookedServiceLine());
-        
-        if(window.getTrainData().getChosenService() == window.getTrainData().getPolarExpressService())
-        {
-            window.getTrainData().getUserBookedServiceLine()[0] = 2;
-            
-        }
-        else if(window.getTrainData().getChosenService() == window.getTrainData().getAlleyExpressService())
-        {
-            window.getTrainData().getUserBookedServiceLine()[0] = 1;
-        }
-    }
     
     //Read into .txt file and return it as an ArrayList<int[]>
     public static ArrayList<int[]> readBookedSeats()
@@ -147,31 +131,44 @@ public class TrainBookingProgram
         }
     }
     
+    //Main Program
     public static void main(String[] args)
     {
-        TrainDataModel trainData = new TrainDataModel();
-
-        //Setup train data
-        trainData.setBookedSeatList(readBookedSeats());
-        setBookedSeats(trainData);
-        
-        DBManager database = new DBManager();
-        MainFrame window = new MainFrame(trainData);
-    
-        database.createTable();
-        database.view("customer");
-        database.view("bookings");
-        window.setVisible(true);
-        
-        window.addWindowListener(new WindowAdapter(){
-            public void windowClosing(WindowEvent e)
+        try
+        {
+            //Setup Connection
+            DBManager database = new DBManager();
+            
+            if(database.isError())
             {
-                writeBookedSeats(window);
+                throw new ConnectionException();
             }
-        });
-        
-        
-        
-        database.closeConnection();
+            
+            database.createTable();
+            database.view("customer");
+            database.view("bookings");
+            
+            //Setup train data
+            TrainDataModel trainData = new TrainDataModel();
+            
+            trainData.setBookedSeatList(readBookedSeats());
+            setBookedSeats(trainData);
+            
+            MainFrame window = new MainFrame(trainData);
+            window.setVisible(true);
+            
+            window.addWindowListener(new WindowAdapter(){
+                @Override
+                public void windowClosing(WindowEvent e)
+                {
+                    writeBookedSeats(window);
+                    database.closeConnection();
+                }
+            });
+        }
+        catch(ConnectionException e)
+        {
+            System.err.println("Error connecting to the database: " + e.getMessage());
+        }
     }   
 }

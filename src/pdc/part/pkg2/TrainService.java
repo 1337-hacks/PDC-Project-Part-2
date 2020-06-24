@@ -3,7 +3,7 @@
  *
  * Class to describe a train service. The train service includes a list (ArrayList) of
  * train lines (TrainLine class) as well as the name of the service. All necessary get and set
- * methods are available as well as displaying the details of the train service.
+ * methods are available.
  */
 
 package pdc.part.pkg2;
@@ -31,21 +31,6 @@ public class TrainService
         this.serviceName = serviceName;
         this.trainLine = trainLine;
     }
-    
-    //Methods
-    
-    //Displays the train service name and their available lines
-    public void displayDetails()
-    {
-        System.out.println("===== " + this.getServiceName() + " =====\n");
-        
-        for (int index = 1; index <= this.getTrainLine().length; index++)
-        {
-            System.out.println(index + ". " + this.getTrainLine()[index - 1]);
-        }
-        
-    }
-    
     
     //Get and Set Methods
     

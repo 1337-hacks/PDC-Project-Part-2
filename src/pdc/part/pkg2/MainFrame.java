@@ -1,7 +1,9 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * --- DESCRIPTION ---
+ * 
+ * This class is the main JFrame class that includes all of the necessary
+ * JPanels and components for the login and booking processes.
+ * This class also uses the TrainDataModel class variable to set the user's selected seats to booked.
  */
 package pdc.part.pkg2;
 
@@ -14,12 +16,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
 import java.util.ArrayList;
-import javax.swing.*;
-
 
 /**
  *
- * @author elija
+ * @author Elijah 18023249 and John 18017056
  */
 public class MainFrame extends javax.swing.JFrame 
 {
@@ -36,6 +36,7 @@ public class MainFrame extends javax.swing.JFrame
     DatabaseMetaData database;
     ResultSet rs;
     SelectSeatsFrame selectSeats;
+    
         
     DBManager data = new DBManager();
     
@@ -54,7 +55,8 @@ public class MainFrame extends javax.swing.JFrame
         }
         catch (SQLException e)
         {
-            System.err.println("Error connecting to the database: " + e.getMessage());
+            infoMessage("Error connecting to the database.", "ERROR");
+            this.dispose();
         }
     }
 
@@ -975,7 +977,7 @@ public class MainFrame extends javax.swing.JFrame
 
             if(rs.next()){
 
-                infoMessage("Login sucessful", "Welcome");
+                infoMessage("Login successful", "Welcome");
 
                 cardLayoutPanel.removeAll();
                 cardLayoutPanel.add(bookingPanel);
@@ -996,7 +998,7 @@ public class MainFrame extends javax.swing.JFrame
         }
         catch (SQLException er)
         {
-            System.err.println("Error: " + er.getMessage());
+            infoMessage("Error occurred when logging in. Please try again later.","ERROR");
         }
 
     }//GEN-LAST:event_loginButtonActionPerformed
@@ -1060,7 +1062,7 @@ public class MainFrame extends javax.swing.JFrame
         }
         catch (SQLException er)
         {
-            System.err.println(er.getMessage());
+            infoMessage("Error creating an account. Please try again later.", "ERROR");
         }
 
     }//GEN-LAST:event_register_createButtonActionPerformed
@@ -1096,7 +1098,7 @@ public class MainFrame extends javax.swing.JFrame
         }
         catch(SQLException e)
         {
-            System.err.println("Error occured when closing connection: " + e.getMessage());
+            infoMessage("Error closing the database connection!", "ERROR");
         }
     }//GEN-LAST:event_formWindowClosing
 
@@ -1184,9 +1186,9 @@ public class MainFrame extends javax.swing.JFrame
                 String selectQuery = "select * from CUSTOMER where USERNAME = '" + userName + "' AND PASSWORD = '" + userpassword + "'";
                 rs = statement.executeQuery(selectQuery);
 
-                if(rs.next()){
-
-                    infoMessage("Login sucessful", "Welcome");
+                if(rs.next())
+                {
+                    infoMessage("Login successful", "Welcome");
 
                     cardLayoutPanel.removeAll();
                     cardLayoutPanel.add(bookingPanel);
@@ -1207,7 +1209,7 @@ public class MainFrame extends javax.swing.JFrame
             }
             catch (SQLException er)
             {
-                System.err.println("Error: " + er.getMessage());
+                infoMessage("Error occurred when logging into account.", "ERROR");
             }
 
         }
